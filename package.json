@@ -1,0 +1,38 @@
+{
+	"name": "ecma-proposal-error-stacks",
+	"version": "0.0.0",
+	"description": "ECMAScript spec proposal for Error Stacks",
+	"scripts": {
+		"build": "ecmarkup spec.emu --js=spec.js --css=spec.css | js-beautify -f - --type=html -t > index.html",
+		"prepublish": "not-in-publish && npm run build || (echo >&2 'no publishing' && exit 255)"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/ljharb/proposal-error-stacks.git"
+	},
+	"keywords": [
+		"error",
+		"errors",
+		"stack",
+		"getStack",
+		"System.getStack",
+		"stack trace",
+		"ECMAScript",
+		"ESNext",
+		"spec",
+		"proposal"
+	],
+	"author": "Jordan Harband <ljharb@gmail.com>",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/ljharb/proposal-promise-error-stacks/issues"
+	},
+	"homepage": "https://github.com/ljharb/proposal-promise-error-stacks#readme",
+	"dependencies": {
+		"in-publish": "^2.0.0"
+	},
+	"devDependencies": {
+		"ecmarkup": "^3.5.1",
+		"js-beautify": "^1.6.4"
+	}
+}
