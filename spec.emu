@@ -1,0 +1,166 @@
+<!doctype html>
+<meta charset="utf8">
+<link rel="stylesheet" href="./spec.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/github.min.css">
+<script src="./spec.js"></script>
+<pre class="metadata">
+title: Error Stacks
+stage: 0
+contributors: Jordan Harband, Mark Miller
+</pre>
+
+<emu-clause id="sec-system-get-stack">
+	<h1>System.getStack ( _error_ )</h1>
+	<p>When the `getStack` method is called with argument _error_, the following steps are taken:</p>
+	<emu-alg>
+		1. If _error_ does not have an [[ErrorData]] internal slot, throw a *TypeError* exception.
+		1. Return ! GetStack(_error_).
+	</emu-alg>
+</emu-clause>
+
+<emu-clause id="sec-getstack" aoid="GetStack">
+	<h1>GetStack ( _error_ )</h1>
+	<p>When the abstract operation _GetStack_ is called with argument _error_, the following steps are performed:</p>
+	<emu-alg>
+		1. Assert: _error_ has an [[ErrorData]] internal slot.
+		1. Let _calls_ be ! GetStackCalls(_error_).
+		1. Let _obj_ be ! ObjectCreate(%ObjectPrototype%).
+		1. Perform ! CreateDataProperty(_obj_, *"calls"*, _value_).
+		1. Assert: The above CreateDataProperty operation returns *true*.
+		1. Let _status_ be ! SetIntegrityLevel(_obj_, *"frozen"*).
+		1. Assert: _status_ is *true*.
+		1. Return _obj_.
+	</emu-alg>
+</emu-clause>
+
+<emu-clause id="sec-getstackcalls" aoid="GetStackCalls">
+	<h1>GetStackCalls( _error_ )</h1>
+	<p>When the abstract operation _GetStackCalls_ is called with argument _error_, the following steps are performed:</p>
+	<emu-alg>
+		1. Assert: _error_ has an [[ErrorData]] internal slot.
+		1. Let _calls_ be a new empty List.
+		1. Repeat, for each Stack Frame _frame_ in _error_.[[ErrorData]],
+			1. Append ! FromStackFrame(_frame_) to _calls_.
+		1. Let _array_ be ! CreateArrayFromList(_calls_).
+		1. Let _status_ be ! SetIntegrityLevel(_array_, *"frozen"*).
+		1. Assert: _status_ is *true*.
+		1. Return _array_.
+	</emu-alg>
+</emu-clause>
+
+<emu-clause id="sec-stack-frame-specification-type">
+	<h1>The Stack Frame Specification Type</h1>
+
+	<emu-clause id="sec-isstackframe" aoid="IsStackFrame">
+		<h1>IsStackFrame ( _frame_ )</h1>
+		<p>When the abstract operation IsStackFrame is called with Stack Frame _frame_, the following steps are performed:</p>
+		<emu-alg>
+			1. If Type(_frame_) is not Object, return *false*.
+			1. If _frame_ does not have a [[Name]] internal slot, return *false*.
+			1. If _frame_ does not have a [[Source]] internal slot, return *false*.
+			1. If _frame_ does not have a [[Span]] internal slot, return *false*.
+			1. If Type(_frame_.[[Name]]) is not String, return *false*.
+			1. If Type(_frame_.[[Source]]) is not String, and IsStackFrame(_source_) is not *true*, return *false*.
+			1. If IsStackFrameSpan(_frame_.[[Span]]) is not *true*, return *false*.
+			1. Return *true*.
+		</emu-alg>
+	</emu-clause>
+
+	<emu-clause id="sec-isstackspan" aoid="IsStackFrameSpan">
+		<h1>IsStackFrameSpan ( _span_ )</h1>
+		<p>When the abstract operation IsStackFrameSpan is called with argument _span_, the following steps are performed:</p>
+		<emu-alg>
+			1. If Type(_span_) is not Object, return *false*.
+			1. If _span_ does not have a [[StartPosition]] internal slot, return *false*.
+			1. If IsStackFramePosition(_span_.[[StartPosition]]) is not *true*, return *false*.
+			1. If _span_ has an [[EndPosition]] internal slot,
+				1. If IsStackFramePosition(_span_.[[EndPosition]]) is not *true*, return *false*.
+			1. Return *true*.
+		</emu-alg>
+	</emu-clause>
+
+	<emu-clause id="sec-isstackposition" aoid="IsStackFramePosition">
+		<h1>IsStackFramePosition ( _position_ )</h1>
+		<p>When the abstract operation IsStackFramePosition is called with argument _position_, the following steps are performed:</p>
+		<emu-alg>
+			1. If Type(_position_) is not Object, return *false*.
+			1. If _position_ does not have a [[Line]] internal slot, return *false*.
+			1. If _position_.[[Line]] is not finite or is not an integer, return *false*.
+			1. If _position_ has a [[Column]] internal slot,
+				1. If _position_.[[Column]] is not finite or is not an integer, return *false*.
+			1. Return *true*.
+		</emu-alg>
+	</emu-clause>
+
+	<emu-clause id="sec-fromstackframe" aoid="FromStackFrame">
+		<h1>FromStackFrame ( _frame_ )</h1>
+		<p>When the abstract operation FromStackFrame is called with Stack Frame _frame_, the following steps are taken:</p>
+		<emu-alg>
+			1. Assert: IsStackFrame(_frame_) is *true*.
+			1. Let _obj_ be ObjectCreate(%ObjectPrototype%).
+			1. Assert: _obj_ is an extensible ordinary object with no own properties.
+			1. Perform ! CreateDataProperty(_obj_, *"name"*, _frame_.[[Name]]).
+			1. Let _source_ be _frame_.[[Source]].
+			1. If Type(_source_) is String,
+				1. Perform ! CreateDataProperty(_obj_, *"source"*, _source_).
+			1. Else,
+				1. Assert: IsStackFrame(_source_) is *true*.
+				1. Perform ! CreateDataProperty(_obj_, *"source*", ! FromStackFrame(_source_)).
+			1. Perform ! CreateDataProperty(_obj_, *"span"*, ! FromStackFrameSpan(_frame_.[[Span]])).
+			1. Assert: All of the above CreateDataProperty operations return *true*.
+			1. Let _status_ be ! SetIntegrityLevel(_obj_, *"frozen"*).
+			1. Assert: _status_ is *true*.
+			1. Return _obj_.
+		</emu-alg>
+	</emu-clause>
+
+	<emu-clause id="sec-fromstackframespan" aoid="FromStackFrameSpan">
+		<h1>FromStackFrameSpan ( _span_ )</h1>
+		<p>When the abstract operation FromStackFrameSpan is called with argument _span_, the following steps are taken:</p>
+		<emu-alg>
+			1. Assert: IsStackFrameSpan(_span_) is *true*.
+			1. Let _list_ be a new empty List.
+			1. Append ! FromStackFramePosition(_span_.[[StartPosition]]) to _list_.
+			1. If _span_ has an [[EndPosition]] internal slot, append ! FromStackFramePosition(_span_.[[EndPosition]]) to _list_.
+			1. Let _array_ be ! CreateArrayFromList(_list_).
+			1. Let _status_ be ! SetIntegrityLevel(_array_, *"frozen"*).
+			1. Assert: _status_ is *true*.
+			1. Return _array_.
+		</emu-alg>
+	</emu-clause>
+
+	<emu-clause id="sec-fromstackframeposition" aoid="FromStackFramePosition">
+		<h1>FromStackFramePosition ( _position_ )</h1>
+		<p>When the abstract operation FromStackFramePosition is called with argument _position_, the following steps are taken:</p>
+		<emu-alg>
+			1. Assert: IsStackFramePosition(_position_) is *true*.
+			1. Let _list_ be a new empty List.
+			1. Append _position_.[[Line]] to _list_.
+			1. If _position_ has a [[Column]] internal slot, append _position_.[[Column]] to _list_.
+			1. Let _array_ be ! CreateArrayFromList(_list_).
+			1. Let _status_ be ! SetIntegrityLevel(_array_, *"frozen"*).
+			1. Assert: _status_ is *true*.
+			1. Return _array_.
+		</emu-alg>
+	</emu-clause>
+</emu-clause>
+
+<emu-annex id="sec-additional-built-in-properties">
+	<h1>Additional Built-in Properties</h1>
+	<p>When the ECMAScript host is a web browser the following additional properties of the standard built-in objects are defined.</p>
+
+	<emu-annex id="sec-additional-properties-of-the-error.prototype-object">
+		<h1>Additional Properties of the Error.prototype Object</h1>
+
+		<emu-annex id="sec-error.prototype-stack">
+			<h1>get Error.prototype.stack</h1>
+			<p>*Error.prototype.stack* is an accessor property whose set accessor function is *undefined*. Its get accessor function performs the following steps:</p>
+			<emu-alg>
+				1. Let _E_ be the *this* value.
+				1. If Type(_E_) is not Object, throw a *TypeError* exception.
+				1. If _E_ does not have an [[ErrorData]] internal slot, throw a *TypeError* exception.
+				1. Return ! GetStack(_error_).
+			</emu-alg>
+		</emu-annex>
+	</emu-annex>
+</emu-annex>

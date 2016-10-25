@@ -1,0 +1,567 @@
+<!doctype html>
+
+<head>
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="./spec.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/github.min.css">
+	<script src="./spec.js"></script>
+	<title>Error Stacks</title>
+	<script type="application/json" id="menu-search-biblio">
+		[{
+			"type": "clause",
+			"id": "sec-system-get-stack",
+			"aoid": null,
+			"title": "System.getStack ( error )",
+			"titleHTML": "System.getStack ( <var>error</var> )",
+			"number": "1",
+			"namespace": "<no location>",
+			"location": "",
+			"key": "System.getStack ( error )"
+		}, {
+			"type": "op",
+			"aoid": "GetStack",
+			"refId": "sec-getstack",
+			"location": "",
+			"key": "GetStack"
+		}, {
+			"type": "clause",
+			"id": "sec-getstack",
+			"aoid": "GetStack",
+			"title": "GetStack ( error )",
+			"titleHTML": "GetStack ( <var>error</var> )",
+			"number": "2",
+			"namespace": "<no location>",
+			"location": "",
+			"key": "GetStack ( error )"
+		}, {
+			"type": "op",
+			"aoid": "GetStackCalls",
+			"refId": "sec-getstackcalls",
+			"location": "",
+			"key": "GetStackCalls"
+		}, {
+			"type": "clause",
+			"id": "sec-getstackcalls",
+			"aoid": "GetStackCalls",
+			"title": "GetStackCalls( error )",
+			"titleHTML": "GetStackCalls( <var>error</var> )",
+			"number": "3",
+			"namespace": "<no location>",
+			"location": "",
+			"key": "GetStackCalls( error )"
+		}, {
+			"type": "op",
+			"aoid": "IsStackFrame",
+			"refId": "sec-isstackframe",
+			"location": "",
+			"key": "IsStackFrame"
+		}, {
+			"type": "clause",
+			"id": "sec-isstackframe",
+			"aoid": "IsStackFrame",
+			"title": "IsStackFrame ( frame )",
+			"titleHTML": "IsStackFrame ( <var>frame</var> )",
+			"number": "4.1",
+			"namespace": "<no location>",
+			"location": "",
+			"key": "IsStackFrame ( frame )"
+		}, {
+			"type": "op",
+			"aoid": "IsStackFrameSpan",
+			"refId": "sec-isstackspan",
+			"location": "",
+			"key": "IsStackFrameSpan"
+		}, {
+			"type": "clause",
+			"id": "sec-isstackspan",
+			"aoid": "IsStackFrameSpan",
+			"title": "IsStackFrameSpan ( span )",
+			"titleHTML": "IsStackFrameSpan ( <var>span</var> )",
+			"number": "4.2",
+			"namespace": "<no location>",
+			"location": "",
+			"key": "IsStackFrameSpan ( span )"
+		}, {
+			"type": "op",
+			"aoid": "IsStackFramePosition",
+			"refId": "sec-isstackposition",
+			"location": "",
+			"key": "IsStackFramePosition"
+		}, {
+			"type": "clause",
+			"id": "sec-isstackposition",
+			"aoid": "IsStackFramePosition",
+			"title": "IsStackFramePosition ( position )",
+			"titleHTML": "IsStackFramePosition ( <var>position</var> )",
+			"number": "4.3",
+			"namespace": "<no location>",
+			"location": "",
+			"key": "IsStackFramePosition ( position )"
+		}, {
+			"type": "op",
+			"aoid": "FromStackFrame",
+			"refId": "sec-fromstackframe",
+			"location": "",
+			"key": "FromStackFrame"
+		}, {
+			"type": "clause",
+			"id": "sec-fromstackframe",
+			"aoid": "FromStackFrame",
+			"title": "FromStackFrame ( frame )",
+			"titleHTML": "FromStackFrame ( <var>frame</var> )",
+			"number": "4.4",
+			"namespace": "<no location>",
+			"location": "",
+			"key": "FromStackFrame ( frame )"
+		}, {
+			"type": "op",
+			"aoid": "FromStackFrameSpan",
+			"refId": "sec-fromstackframespan",
+			"location": "",
+			"key": "FromStackFrameSpan"
+		}, {
+			"type": "clause",
+			"id": "sec-fromstackframespan",
+			"aoid": "FromStackFrameSpan",
+			"title": "FromStackFrameSpan ( span )",
+			"titleHTML": "FromStackFrameSpan ( <var>span</var> )",
+			"number": "4.5",
+			"namespace": "<no location>",
+			"location": "",
+			"key": "FromStackFrameSpan ( span )"
+		}, {
+			"type": "op",
+			"aoid": "FromStackFramePosition",
+			"refId": "sec-fromstackframeposition",
+			"location": "",
+			"key": "FromStackFramePosition"
+		}, {
+			"type": "clause",
+			"id": "sec-fromstackframeposition",
+			"aoid": "FromStackFramePosition",
+			"title": "FromStackFramePosition ( position )",
+			"titleHTML": "FromStackFramePosition ( <var>position</var> )",
+			"number": "4.6",
+			"namespace": "<no location>",
+			"location": "",
+			"key": "FromStackFramePosition ( position )"
+		}, {
+			"type": "clause",
+			"id": "sec-stack-frame-specification-type",
+			"aoid": null,
+			"title": "The Stack Frame Specification Type",
+			"titleHTML": "The Stack Frame Specification Type",
+			"number": "4",
+			"namespace": "<no location>",
+			"location": "",
+			"key": "The Stack Frame Specification Type"
+		}, {
+			"type": "clause",
+			"id": "sec-error.prototype-stack",
+			"aoid": null,
+			"title": "get Error.prototype.stack",
+			"titleHTML": "get Error.prototype.stack",
+			"number": "A.1.1",
+			"namespace": "<no location>",
+			"location": "",
+			"key": "get Error.prototype.stack"
+		}, {
+			"type": "clause",
+			"id": "sec-additional-properties-of-the-error.prototype-object",
+			"aoid": null,
+			"title": "Additional Properties of the Error.prototype Object",
+			"titleHTML": "Additional Properties of the Error.prototype Object",
+			"number": "A.1",
+			"namespace": "<no location>",
+			"location": "",
+			"key": "Additional Properties of the Error.prototype Object"
+		}, {
+			"type": "clause",
+			"id": "sec-additional-built-in-properties",
+			"aoid": null,
+			"title": "Additional Built-in Properties",
+			"titleHTML": "Additional Built-in Properties",
+			"number": "A",
+			"namespace": "<no location>",
+			"location": "",
+			"key": "Additional Built-in Properties"
+		}, {
+			"type": "clause",
+			"id": "sec-copyright-and-software-license",
+			"aoid": null,
+			"title": "Copyright & Software License",
+			"titleHTML": "Copyright &amp; Software License",
+			"number": "B",
+			"namespace": "<no location>",
+			"location": "",
+			"key": "Copyright & Software License"
+		}]
+	</script>
+</head>
+
+<body>
+	<div id="menu-toggle">☰</div>
+	<div id="menu">
+		<div id="menu-search"><input type="text" id="menu-search-box" placeholder="Search...">
+			<div id="menu-search-results" class="inactive"></div>
+		</div>
+		<div id="menu-toc">
+			<ol class="toc">
+				<li><span class="item-toggle-none"></span><a href="#sec-system-get-stack" title="System.getStack ( error )"><span class="secnum">1</span> System.getStack ( <var>error</var> )</a></li>
+				<li><span class="item-toggle-none"></span><a href="#sec-getstack" title="GetStack ( error )"><span class="secnum">2</span> GetStack ( <var>error</var> )</a></li>
+				<li><span class="item-toggle-none"></span><a href="#sec-getstackcalls" title="GetStackCalls( error )"><span class="secnum">3</span> GetStackCalls( <var>error</var> )</a></li>
+				<li><span class="item-toggle">◢</span><a href="#sec-stack-frame-specification-type" title="The Stack Frame Specification Type"><span class="secnum">4</span> The Stack Frame Specification Type</a>
+					<ol class="toc">
+						<li><span class="item-toggle-none"></span><a href="#sec-isstackframe" title="IsStackFrame ( frame )"><span class="secnum">4.1</span> IsStackFrame ( <var>frame</var> )</a></li>
+						<li><span class="item-toggle-none"></span><a href="#sec-isstackspan" title="IsStackFrameSpan ( span )"><span class="secnum">4.2</span> IsStackFrameSpan ( <var>span</var> )</a></li>
+						<li><span class="item-toggle-none"></span><a href="#sec-isstackposition" title="IsStackFramePosition ( position )"><span class="secnum">4.3</span> IsStackFramePosition ( <var>position</var> )</a></li>
+						<li><span class="item-toggle-none"></span><a href="#sec-fromstackframe" title="FromStackFrame ( frame )"><span class="secnum">4.4</span> FromStackFrame ( <var>frame</var> )</a></li>
+						<li><span class="item-toggle-none"></span><a href="#sec-fromstackframespan" title="FromStackFrameSpan ( span )"><span class="secnum">4.5</span> FromStackFrameSpan ( <var>span</var> )</a></li>
+						<li><span class="item-toggle-none"></span><a href="#sec-fromstackframeposition" title="FromStackFramePosition ( position )"><span class="secnum">4.6</span> FromStackFramePosition ( <var>position</var> )</a></li>
+					</ol>
+				</li>
+				<li><span class="item-toggle">◢</span><a href="#sec-additional-built-in-properties" title="Additional Built-in Properties"><span class="secnum">A</span> Additional Built-in Properties</a>
+					<ol class="toc">
+						<li><span class="item-toggle">◢</span><a href="#sec-additional-properties-of-the-error.prototype-object" title="Additional Properties of the Error.prototype Object"><span class="secnum">A.1</span> Additional Properties of the Error.prototype Object</a>
+							<ol class="toc">
+								<li><span class="item-toggle-none"></span><a href="#sec-error.prototype-stack" title="get Error.prototype.stack"><span class="secnum">A.1.1</span> get Error.prototype.stack</a></li>
+							</ol>
+						</li>
+					</ol>
+				</li>
+				<li><span class="item-toggle-none"></span><a href="#sec-copyright-and-software-license" title="Copyright &amp; Software License"><span class="secnum">B</span> Copyright &amp; Software License</a></li>
+			</ol>
+		</div>
+	</div>
+	<h1 class="version">Stage 0 Draft / October 25, 2016</h1>
+	<h1 class="title">Error Stacks</h1>
+
+	<emu-clause id="sec-system-get-stack">
+		<h1><span class="secnum">1</span>System.getStack ( <var>error</var> )<span class="utils"><span class="anchor"><a href="#sec-system-get-stack">#</a></span></span>
+		</h1>
+		<p>When the <code>getStack</code> method is called with argument <var>error</var>, the following steps are taken:</p>
+		<emu-alg>
+			<ol>
+				<li>If <var>error</var> does not have an [[ErrorData]] internal slot, throw a
+					<emu-val>TypeError</emu-val> exception.</li>
+				<li>Return !
+					<emu-xref aoid="GetStack"><a href="#sec-getstack">GetStack</a></emu-xref>(<var>error</var>).
+				</li>
+			</ol>
+		</emu-alg>
+	</emu-clause>
+
+	<emu-clause id="sec-getstack" aoid="GetStack">
+		<h1><span class="secnum">2</span>GetStack ( <var>error</var> )<span class="utils"><span class="anchor"><a href="#sec-getstack">#</a></span></span>
+		</h1>
+		<p>When the abstract operation <var>GetStack</var> is called with argument <var>error</var>, the following steps are performed:</p>
+		<emu-alg>
+			<ol>
+				<li>Assert: <var>error</var> has an [[ErrorData]] internal slot.</li>
+				<li>Let <var>calls</var> be !
+					<emu-xref aoid="GetStackCalls"><a href="#sec-getstackcalls">GetStackCalls</a></emu-xref>(<var>error</var>).</li>
+				<li>Let <var>obj</var> be !
+					<emu-xref aoid="ObjectCreate"><a href="https://tc39.github.io/ecma262/#sec-objectcreate">ObjectCreate</a></emu-xref>(
+					<emu-xref href="#sec-properties-of-the-object-prototype-object"><a href="https://tc39.github.io/ecma262/#sec-properties-of-the-object-prototype-object">%ObjectPrototype%</a></emu-xref>).</li>
+				<li>Perform !
+					<emu-xref aoid="CreateDataProperty"><a href="https://tc39.github.io/ecma262/#sec-createdataproperty">CreateDataProperty</a></emu-xref>(<var>obj</var>,
+					<emu-val>"calls"</emu-val>, <var>value</var>).</li>
+				<li>Assert: The above
+					<emu-xref aoid="CreateDataProperty"><a href="https://tc39.github.io/ecma262/#sec-createdataproperty">CreateDataProperty</a></emu-xref> operation returns
+					<emu-val>true</emu-val>.</li>
+				<li>Let <var>status</var> be !
+					<emu-xref aoid="SetIntegrityLevel"><a href="https://tc39.github.io/ecma262/#sec-setintegritylevel">SetIntegrityLevel</a></emu-xref>(<var>obj</var>,
+					<emu-val>"frozen"</emu-val>).</li>
+				<li>Assert: <var>status</var> is
+					<emu-val>true</emu-val>.</li>
+				<li>Return <var>obj</var>.
+				</li>
+			</ol>
+		</emu-alg>
+	</emu-clause>
+
+	<emu-clause id="sec-getstackcalls" aoid="GetStackCalls">
+		<h1><span class="secnum">3</span>GetStackCalls( <var>error</var> )<span class="utils"><span class="anchor"><a href="#sec-getstackcalls">#</a></span></span>
+		</h1>
+		<p>When the abstract operation <var>GetStackCalls</var> is called with argument <var>error</var>, the following steps are performed:</p>
+		<emu-alg>
+			<ol>
+				<li>Assert: <var>error</var> has an [[ErrorData]] internal slot.</li>
+				<li>Let <var>calls</var> be a new empty
+					<emu-xref href="#sec-list-and-record-specification-type"><a href="https://tc39.github.io/ecma262/#sec-list-and-record-specification-type">List</a></emu-xref>.</li>
+				<li>Repeat, for each Stack Frame <var>frame</var> in <var>error</var>.[[ErrorData]],
+					<ol>
+						<li>Append !
+							<emu-xref aoid="FromStackFrame"><a href="#sec-fromstackframe">FromStackFrame</a></emu-xref>(<var>frame</var>) to <var>calls</var>.</li>
+					</ol>
+				</li>
+				<li>Let <var>array</var> be !
+					<emu-xref aoid="CreateArrayFromList"><a href="https://tc39.github.io/ecma262/#sec-createarrayfromlist">CreateArrayFromList</a></emu-xref>(<var>calls</var>).</li>
+				<li>Let <var>status</var> be !
+					<emu-xref aoid="SetIntegrityLevel"><a href="https://tc39.github.io/ecma262/#sec-setintegritylevel">SetIntegrityLevel</a></emu-xref>(<var>array</var>,
+					<emu-val>"frozen"</emu-val>).</li>
+				<li>Assert: <var>status</var> is
+					<emu-val>true</emu-val>.</li>
+				<li>Return <var>array</var>.
+				</li>
+			</ol>
+		</emu-alg>
+	</emu-clause>
+
+	<emu-clause id="sec-stack-frame-specification-type">
+		<h1><span class="secnum">4</span>The Stack Frame Specification Type<span class="utils"><span class="anchor"><a href="#sec-stack-frame-specification-type">#</a></span></span>
+		</h1>
+
+		<emu-clause id="sec-isstackframe" aoid="IsStackFrame">
+			<h1><span class="secnum">4.1</span>IsStackFrame ( <var>frame</var> )<span class="utils"><span class="anchor"><a href="#sec-isstackframe">#</a></span></span>
+			</h1>
+			<p>When the abstract operation IsStackFrame is called with Stack Frame <var>frame</var>, the following steps are performed:</p>
+			<emu-alg>
+				<ol>
+					<li>If
+						<emu-xref aoid="Type"><a href="https://tc39.github.io/ecma262/#sec-ecmascript-data-types-and-values">Type</a></emu-xref>(<var>frame</var>) is not Object, return
+						<emu-val>false</emu-val>.</li>
+					<li>If <var>frame</var> does not have a [[Name]] internal slot, return
+						<emu-val>false</emu-val>.</li>
+					<li>If <var>frame</var> does not have a [[Source]] internal slot, return
+						<emu-val>false</emu-val>.</li>
+					<li>If <var>frame</var> does not have a [[Span]] internal slot, return
+						<emu-val>false</emu-val>.</li>
+					<li>If
+						<emu-xref aoid="Type"><a href="https://tc39.github.io/ecma262/#sec-ecmascript-data-types-and-values">Type</a></emu-xref>(<var>frame</var>.[[Name]]) is not String, return
+						<emu-val>false</emu-val>.</li>
+					<li>If
+						<emu-xref aoid="Type"><a href="https://tc39.github.io/ecma262/#sec-ecmascript-data-types-and-values">Type</a></emu-xref>(<var>frame</var>.[[Source]]) is not String, and
+						<emu-xref aoid="IsStackFrame"><a href="#sec-isstackframe">IsStackFrame</a></emu-xref>(<var>source</var>) is not
+						<emu-val>true</emu-val>, return
+						<emu-val>false</emu-val>.</li>
+					<li>If
+						<emu-xref aoid="IsStackFrameSpan"><a href="#sec-isstackspan">IsStackFrameSpan</a></emu-xref>(<var>frame</var>.[[Span]]) is not
+						<emu-val>true</emu-val>, return
+						<emu-val>false</emu-val>.</li>
+					<li>Return
+						<emu-val>true</emu-val>.
+					</li>
+				</ol>
+			</emu-alg>
+		</emu-clause>
+
+		<emu-clause id="sec-isstackspan" aoid="IsStackFrameSpan">
+			<h1><span class="secnum">4.2</span>IsStackFrameSpan ( <var>span</var> )<span class="utils"><span class="anchor"><a href="#sec-isstackspan">#</a></span></span>
+			</h1>
+			<p>When the abstract operation IsStackFrameSpan is called with argument <var>span</var>, the following steps are performed:</p>
+			<emu-alg>
+				<ol>
+					<li>If
+						<emu-xref aoid="Type"><a href="https://tc39.github.io/ecma262/#sec-ecmascript-data-types-and-values">Type</a></emu-xref>(<var>span</var>) is not Object, return
+						<emu-val>false</emu-val>.</li>
+					<li>If <var>span</var> does not have a [[StartPosition]] internal slot, return
+						<emu-val>false</emu-val>.</li>
+					<li>If
+						<emu-xref aoid="IsStackFramePosition"><a href="#sec-isstackposition">IsStackFramePosition</a></emu-xref>(<var>span</var>.[[StartPosition]]) is not
+						<emu-val>true</emu-val>, return
+						<emu-val>false</emu-val>.</li>
+					<li>If <var>span</var> has an [[EndPosition]] internal slot,
+						<ol>
+							<li>If
+								<emu-xref aoid="IsStackFramePosition"><a href="#sec-isstackposition">IsStackFramePosition</a></emu-xref>(<var>span</var>.[[EndPosition]]) is not
+								<emu-val>true</emu-val>, return
+								<emu-val>false</emu-val>.</li>
+						</ol>
+					</li>
+					<li>Return
+						<emu-val>true</emu-val>.
+					</li>
+				</ol>
+			</emu-alg>
+		</emu-clause>
+
+		<emu-clause id="sec-isstackposition" aoid="IsStackFramePosition">
+			<h1><span class="secnum">4.3</span>IsStackFramePosition ( <var>position</var> )<span class="utils"><span class="anchor"><a href="#sec-isstackposition">#</a></span></span>
+			</h1>
+			<p>When the abstract operation IsStackFramePosition is called with argument <var>position</var>, the following steps are performed:</p>
+			<emu-alg>
+				<ol>
+					<li>If
+						<emu-xref aoid="Type"><a href="https://tc39.github.io/ecma262/#sec-ecmascript-data-types-and-values">Type</a></emu-xref>(<var>position</var>) is not Object, return
+						<emu-val>false</emu-val>.</li>
+					<li>If <var>position</var> does not have a [[Line]] internal slot, return
+						<emu-val>false</emu-val>.</li>
+					<li>If <var>position</var>.[[Line]] is not finite or is not an integer, return
+						<emu-val>false</emu-val>.</li>
+					<li>If <var>position</var> has a [[Column]] internal slot,
+						<ol>
+							<li>If <var>position</var>.[[Column]] is not finite or is not an integer, return
+								<emu-val>false</emu-val>.</li>
+						</ol>
+					</li>
+					<li>Return
+						<emu-val>true</emu-val>.
+					</li>
+				</ol>
+			</emu-alg>
+		</emu-clause>
+
+		<emu-clause id="sec-fromstackframe" aoid="FromStackFrame">
+			<h1><span class="secnum">4.4</span>FromStackFrame ( <var>frame</var> )<span class="utils"><span class="anchor"><a href="#sec-fromstackframe">#</a></span></span>
+			</h1>
+			<p>When the abstract operation FromStackFrame is called with Stack Frame <var>frame</var>, the following steps are taken:</p>
+			<emu-alg>
+				<ol>
+					<li>Assert:
+						<emu-xref aoid="IsStackFrame"><a href="#sec-isstackframe">IsStackFrame</a></emu-xref>(<var>frame</var>) is
+						<emu-val>true</emu-val>.</li>
+					<li>Let <var>obj</var> be
+						<emu-xref aoid="ObjectCreate"><a href="https://tc39.github.io/ecma262/#sec-objectcreate">ObjectCreate</a></emu-xref>(
+						<emu-xref href="#sec-properties-of-the-object-prototype-object"><a href="https://tc39.github.io/ecma262/#sec-properties-of-the-object-prototype-object">%ObjectPrototype%</a></emu-xref>).</li>
+					<li>Assert: <var>obj</var> is an extensible ordinary object with no own properties.</li>
+					<li>Perform !
+						<emu-xref aoid="CreateDataProperty"><a href="https://tc39.github.io/ecma262/#sec-createdataproperty">CreateDataProperty</a></emu-xref>(<var>obj</var>,
+						<emu-val>"name"</emu-val>, <var>frame</var>.[[Name]]).</li>
+					<li>Let <var>source</var> be <var>frame</var>.[[Source]].</li>
+					<li>If
+						<emu-xref aoid="Type"><a href="https://tc39.github.io/ecma262/#sec-ecmascript-data-types-and-values">Type</a></emu-xref>(<var>source</var>) is String,
+						<ol>
+							<li>Perform !
+								<emu-xref aoid="CreateDataProperty"><a href="https://tc39.github.io/ecma262/#sec-createdataproperty">CreateDataProperty</a></emu-xref>(<var>obj</var>,
+								<emu-val>"source"</emu-val>, <var>source</var>).</li>
+						</ol>
+					</li>
+					<li>Else,
+						<ol>
+							<li>Assert:
+								<emu-xref aoid="IsStackFrame"><a href="#sec-isstackframe">IsStackFrame</a></emu-xref>(<var>source</var>) is
+								<emu-val>true</emu-val>.</li>
+							<li>Perform !
+								<emu-xref aoid="CreateDataProperty"><a href="https://tc39.github.io/ecma262/#sec-createdataproperty">CreateDataProperty</a></emu-xref>(<var>obj</var>,
+								<emu-val>"source</emu-val>", !
+								<emu-xref aoid="FromStackFrame"><a href="#sec-fromstackframe">FromStackFrame</a></emu-xref>(<var>source</var>)).</li>
+						</ol>
+					</li>
+					<li>Perform !
+						<emu-xref aoid="CreateDataProperty"><a href="https://tc39.github.io/ecma262/#sec-createdataproperty">CreateDataProperty</a></emu-xref>(<var>obj</var>,
+						<emu-val>"span"</emu-val>, !
+						<emu-xref aoid="FromStackFrameSpan"><a href="#sec-fromstackframespan">FromStackFrameSpan</a></emu-xref>(<var>frame</var>.[[Span]])).</li>
+					<li>Assert: All of the above
+						<emu-xref aoid="CreateDataProperty"><a href="https://tc39.github.io/ecma262/#sec-createdataproperty">CreateDataProperty</a></emu-xref> operations return
+						<emu-val>true</emu-val>.</li>
+					<li>Let <var>status</var> be !
+						<emu-xref aoid="SetIntegrityLevel"><a href="https://tc39.github.io/ecma262/#sec-setintegritylevel">SetIntegrityLevel</a></emu-xref>(<var>obj</var>,
+						<emu-val>"frozen"</emu-val>).</li>
+					<li>Assert: <var>status</var> is
+						<emu-val>true</emu-val>.</li>
+					<li>Return <var>obj</var>.
+					</li>
+				</ol>
+			</emu-alg>
+		</emu-clause>
+
+		<emu-clause id="sec-fromstackframespan" aoid="FromStackFrameSpan">
+			<h1><span class="secnum">4.5</span>FromStackFrameSpan ( <var>span</var> )<span class="utils"><span class="anchor"><a href="#sec-fromstackframespan">#</a></span></span>
+			</h1>
+			<p>When the abstract operation FromStackFrameSpan is called with argument <var>span</var>, the following steps are taken:</p>
+			<emu-alg>
+				<ol>
+					<li>Assert:
+						<emu-xref aoid="IsStackFrameSpan"><a href="#sec-isstackspan">IsStackFrameSpan</a></emu-xref>(<var>span</var>) is
+						<emu-val>true</emu-val>.</li>
+					<li>Let <var>list</var> be a new empty
+						<emu-xref href="#sec-list-and-record-specification-type"><a href="https://tc39.github.io/ecma262/#sec-list-and-record-specification-type">List</a></emu-xref>.</li>
+					<li>Append !
+						<emu-xref aoid="FromStackFramePosition"><a href="#sec-fromstackframeposition">FromStackFramePosition</a></emu-xref>(<var>span</var>.[[StartPosition]]) to <var>list</var>.</li>
+					<li>If <var>span</var> has an [[EndPosition]] internal slot, append !
+						<emu-xref aoid="FromStackFramePosition"><a href="#sec-fromstackframeposition">FromStackFramePosition</a></emu-xref>(<var>span</var>.[[EndPosition]]) to <var>list</var>.</li>
+					<li>Let <var>array</var> be !
+						<emu-xref aoid="CreateArrayFromList"><a href="https://tc39.github.io/ecma262/#sec-createarrayfromlist">CreateArrayFromList</a></emu-xref>(<var>list</var>).</li>
+					<li>Let <var>status</var> be !
+						<emu-xref aoid="SetIntegrityLevel"><a href="https://tc39.github.io/ecma262/#sec-setintegritylevel">SetIntegrityLevel</a></emu-xref>(<var>array</var>,
+						<emu-val>"frozen"</emu-val>).</li>
+					<li>Assert: <var>status</var> is
+						<emu-val>true</emu-val>.</li>
+					<li>Return <var>array</var>.
+					</li>
+				</ol>
+			</emu-alg>
+		</emu-clause>
+
+		<emu-clause id="sec-fromstackframeposition" aoid="FromStackFramePosition">
+			<h1><span class="secnum">4.6</span>FromStackFramePosition ( <var>position</var> )<span class="utils"><span class="anchor"><a href="#sec-fromstackframeposition">#</a></span></span>
+			</h1>
+			<p>When the abstract operation FromStackFramePosition is called with argument <var>position</var>, the following steps are taken:</p>
+			<emu-alg>
+				<ol>
+					<li>Assert:
+						<emu-xref aoid="IsStackFramePosition"><a href="#sec-isstackposition">IsStackFramePosition</a></emu-xref>(<var>position</var>) is
+						<emu-val>true</emu-val>.</li>
+					<li>Let <var>list</var> be a new empty
+						<emu-xref href="#sec-list-and-record-specification-type"><a href="https://tc39.github.io/ecma262/#sec-list-and-record-specification-type">List</a></emu-xref>.</li>
+					<li>Append <var>position</var>.[[Line]] to <var>list</var>.</li>
+					<li>If <var>position</var> has a [[Column]] internal slot, append <var>position</var>.[[Column]] to <var>list</var>.</li>
+					<li>Let <var>array</var> be !
+						<emu-xref aoid="CreateArrayFromList"><a href="https://tc39.github.io/ecma262/#sec-createarrayfromlist">CreateArrayFromList</a></emu-xref>(<var>list</var>).</li>
+					<li>Let <var>status</var> be !
+						<emu-xref aoid="SetIntegrityLevel"><a href="https://tc39.github.io/ecma262/#sec-setintegritylevel">SetIntegrityLevel</a></emu-xref>(<var>array</var>,
+						<emu-val>"frozen"</emu-val>).</li>
+					<li>Assert: <var>status</var> is
+						<emu-val>true</emu-val>.</li>
+					<li>Return <var>array</var>.
+					</li>
+				</ol>
+			</emu-alg>
+		</emu-clause>
+	</emu-clause>
+
+	<emu-annex id="sec-additional-built-in-properties">
+		<h1><span class="secnum">A</span>Additional Built-in Properties<span class="utils"><span class="anchor"><a href="#sec-additional-built-in-properties">#</a></span></span>
+		</h1>
+		<p>When the ECMAScript host is a web browser the following additional properties of the standard built-in objects are defined.</p>
+
+		<emu-annex id="sec-additional-properties-of-the-error.prototype-object">
+			<h1><span class="secnum">A.1</span>Additional Properties of the Error.prototype Object<span class="utils"><span class="anchor"><a href="#sec-additional-properties-of-the-error.prototype-object">#</a></span></span>
+			</h1>
+
+			<emu-annex id="sec-error.prototype-stack">
+				<h1><span class="secnum">A.1.1</span>get Error.prototype.stack<span class="utils"><span class="anchor"><a href="#sec-error.prototype-stack">#</a></span></span>
+				</h1>
+				<p>
+					<emu-val>Error.prototype.stack</emu-val> is an accessor property whose set accessor function is
+					<emu-val>undefined</emu-val>. Its get accessor function performs the following steps:</p>
+				<emu-alg>
+					<ol>
+						<li>Let <var>E</var> be the
+							<emu-val>this</emu-val> value.</li>
+						<li>If
+							<emu-xref aoid="Type"><a href="https://tc39.github.io/ecma262/#sec-ecmascript-data-types-and-values">Type</a></emu-xref>(<var>E</var>) is not Object, throw a
+							<emu-val>TypeError</emu-val> exception.</li>
+						<li>If <var>E</var> does not have an [[ErrorData]] internal slot, throw a
+							<emu-val>TypeError</emu-val> exception.</li>
+						<li>Return !
+							<emu-xref aoid="GetStack"><a href="#sec-getstack">GetStack</a></emu-xref>(<var>error</var>).
+						</li>
+					</ol>
+				</emu-alg>
+			</emu-annex>
+		</emu-annex>
+	</emu-annex>
+	<emu-annex id="sec-copyright-and-software-license">
+		<h1><span class="secnum">B</span>Copyright &amp; Software License<span class="utils"><span class="anchor"><a href="#sec-copyright-and-software-license">#</a></span></span>
+		</h1>
+
+		<h2>Copyright Notice</h2>
+		<p>© 2016 Jordan Harband, Mark Miller</p>
+
+		<h2>Software License</h2>
+		<p>All Software contained in this document ("Software") is protected by copyright and is being made available under the "BSD License", included below. This Software may be subject to third party rights (rights from parties other than Ecma International), including patent rights, and no licenses under such third party rights are granted under this license even if the third party concerned is a member of Ecma International. SEE THE ECMA CODE OF CONDUCT IN PATENT MATTERS AVAILABLE AT http://www.ecma-international.org/memento/codeofconduct.htm FOR INFORMATION REGARDING THE LICENSING OF PATENT CLAIMS THAT ARE REQUIRED TO IMPLEMENT ECMA INTERNATIONAL STANDARDS.</p>
+
+		<p>Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:</p>
+
+		<ol>
+			<li>Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.</li>
+			<li>Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.</li>
+			<li>Neither the name of the authors nor Ecma International may be used to endorse or promote products derived from this software without specific prior written permission.</li>
+		</ol>
+
+		<p>THIS SOFTWARE IS PROVIDED BY THE ECMA INTERNATIONAL "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL ECMA INTERNATIONAL BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</p>
+
+	</emu-annex>
+</body>
