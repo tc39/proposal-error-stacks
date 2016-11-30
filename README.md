@@ -30,7 +30,5 @@ Firefox: `stack` is an own property on `Error.prototype`: `{ configurable: true,
 
 `Error.prototype.stack` is set in stone - this is a defacto reality, and will be implemented in Annex B.
 
-`System` is the current proposed place to stick a privilege-granting method like `getStack`/`getStackString`. This discussion isn‘t particularly important until attempting to reach stage 3 (in other words, while in stage 2) so hopefully we can avoid the distraction until that time.
-
 ## Spec
 You can view the spec in [markdown format](spec.md) or rendered as [HTML](https://ljharb.github.io/proposal-error-stacks/).
