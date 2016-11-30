@@ -13,10 +13,30 @@
 			"aoid": null,
 			"title": "System.getStack ( error )",
 			"titleHTML": "System.getStack ( <var>error</var> )",
-			"number": "1",
+			"number": "1.1",
 			"namespace": "<no location>",
 			"location": "",
 			"key": "System.getStack ( error )"
+		}, {
+			"type": "clause",
+			"id": "sec-system-get-stack-string",
+			"aoid": null,
+			"title": "System.getStackString ( error )",
+			"titleHTML": "System.getStackString ( <var>error</var> )",
+			"number": "1.2",
+			"namespace": "<no location>",
+			"location": "",
+			"key": "System.getStackString ( error )"
+		}, {
+			"type": "clause",
+			"id": "sec-system",
+			"aoid": null,
+			"title": "System",
+			"titleHTML": "System",
+			"number": "1",
+			"namespace": "<no location>",
+			"location": "",
+			"key": "System"
 		}, {
 			"type": "op",
 			"aoid": "GetStack",
@@ -35,6 +55,70 @@
 			"key": "GetStack ( error )"
 		}, {
 			"type": "op",
+			"aoid": "GetStackString",
+			"refId": "sec-getstackstring",
+			"location": "",
+			"key": "GetStackString"
+		}, {
+			"type": "clause",
+			"id": "sec-getstackstring",
+			"aoid": "GetStackString",
+			"title": "GetStackString ( error )",
+			"titleHTML": "GetStackString ( <var>error</var> )",
+			"number": "3",
+			"namespace": "<no location>",
+			"location": "",
+			"key": "GetStackString ( error )"
+		}, {
+			"type": "op",
+			"aoid": "GetFrameString",
+			"refId": "sec-getframestring",
+			"location": "",
+			"key": "GetFrameString"
+		}, {
+			"type": "clause",
+			"id": "sec-getframestring",
+			"aoid": "GetFrameString",
+			"title": "GetFrameString ( frame )",
+			"titleHTML": "GetFrameString ( <var>frame</var> )",
+			"number": "4",
+			"namespace": "<no location>",
+			"location": "",
+			"key": "GetFrameString ( frame )"
+		}, {
+			"type": "op",
+			"aoid": "GetStackFrameSpanString",
+			"refId": "sec-getstackframespanstring",
+			"location": "",
+			"key": "GetStackFrameSpanString"
+		}, {
+			"type": "clause",
+			"id": "sec-getstackframespanstring",
+			"aoid": "GetStackFrameSpanString",
+			"title": "GetStackFrameSpanString( span )",
+			"titleHTML": "GetStackFrameSpanString( <var>span</var> )",
+			"number": "5",
+			"namespace": "<no location>",
+			"location": "",
+			"key": "GetStackFrameSpanString( span )"
+		}, {
+			"type": "op",
+			"aoid": "GetStackFramePositionString",
+			"refId": "sec-getstackframepositionstring",
+			"location": "",
+			"key": "GetStackFramePositionString"
+		}, {
+			"type": "clause",
+			"id": "sec-getstackframepositionstring",
+			"aoid": "GetStackFramePositionString",
+			"title": "GetStackFramePositionString( position )",
+			"titleHTML": "GetStackFramePositionString( <var>position</var> )",
+			"number": "6",
+			"namespace": "<no location>",
+			"location": "",
+			"key": "GetStackFramePositionString( position )"
+		}, {
+			"type": "op",
 			"aoid": "GetStackCalls",
 			"refId": "sec-getstackcalls",
 			"location": "",
@@ -45,7 +129,7 @@
 			"aoid": "GetStackCalls",
 			"title": "GetStackCalls( error )",
 			"titleHTML": "GetStackCalls( <var>error</var> )",
-			"number": "3",
+			"number": "7",
 			"namespace": "<no location>",
 			"location": "",
 			"key": "GetStackCalls( error )"
@@ -61,7 +145,7 @@
 			"aoid": "IsStackFrame",
 			"title": "IsStackFrame ( frame )",
 			"titleHTML": "IsStackFrame ( <var>frame</var> )",
-			"number": "4.1",
+			"number": "8.1",
 			"namespace": "<no location>",
 			"location": "",
 			"key": "IsStackFrame ( frame )"
@@ -77,7 +161,7 @@
 			"aoid": "IsStackFrameSpan",
 			"title": "IsStackFrameSpan ( span )",
 			"titleHTML": "IsStackFrameSpan ( <var>span</var> )",
-			"number": "4.2",
+			"number": "8.2",
 			"namespace": "<no location>",
 			"location": "",
 			"key": "IsStackFrameSpan ( span )"
@@ -93,7 +177,7 @@
 			"aoid": "IsStackFramePosition",
 			"title": "IsStackFramePosition ( position )",
 			"titleHTML": "IsStackFramePosition ( <var>position</var> )",
-			"number": "4.3",
+			"number": "8.3",
 			"namespace": "<no location>",
 			"location": "",
 			"key": "IsStackFramePosition ( position )"
@@ -109,7 +193,7 @@
 			"aoid": "FromStackFrame",
 			"title": "FromStackFrame ( frame )",
 			"titleHTML": "FromStackFrame ( <var>frame</var> )",
-			"number": "4.4",
+			"number": "8.4",
 			"namespace": "<no location>",
 			"location": "",
 			"key": "FromStackFrame ( frame )"
@@ -125,7 +209,7 @@
 			"aoid": "FromStackFrameSpan",
 			"title": "FromStackFrameSpan ( span )",
 			"titleHTML": "FromStackFrameSpan ( <var>span</var> )",
-			"number": "4.5",
+			"number": "8.5",
 			"namespace": "<no location>",
 			"location": "",
 			"key": "FromStackFrameSpan ( span )"
@@ -141,7 +225,7 @@
 			"aoid": "FromStackFramePosition",
 			"title": "FromStackFramePosition ( position )",
 			"titleHTML": "FromStackFramePosition ( <var>position</var> )",
-			"number": "4.6",
+			"number": "8.6",
 			"namespace": "<no location>",
 			"location": "",
 			"key": "FromStackFramePosition ( position )"
@@ -151,7 +235,7 @@
 			"aoid": null,
 			"title": "The Stack Frame Specification Type",
 			"titleHTML": "The Stack Frame Specification Type",
-			"number": "4",
+			"number": "8",
 			"namespace": "<no location>",
 			"location": "",
 			"key": "The Stack Frame Specification Type"
@@ -207,17 +291,26 @@
 		</div>
 		<div id="menu-toc">
 			<ol class="toc">
-				<li><span class="item-toggle-none"></span><a href="#sec-system-get-stack" title="System.getStack ( error )"><span class="secnum">1</span> System.getStack ( <var>error</var> )</a></li>
-				<li><span class="item-toggle-none"></span><a href="#sec-getstack" title="GetStack ( error )"><span class="secnum">2</span> GetStack ( <var>error</var> )</a></li>
-				<li><span class="item-toggle-none"></span><a href="#sec-getstackcalls" title="GetStackCalls( error )"><span class="secnum">3</span> GetStackCalls( <var>error</var> )</a></li>
-				<li><span class="item-toggle">◢</span><a href="#sec-stack-frame-specification-type" title="The Stack Frame Specification Type"><span class="secnum">4</span> The Stack Frame Specification Type</a>
+				<li><span class="item-toggle">◢</span><a href="#sec-system" title="System"><span class="secnum">1</span> System</a>
 					<ol class="toc">
-						<li><span class="item-toggle-none"></span><a href="#sec-isstackframe" title="IsStackFrame ( frame )"><span class="secnum">4.1</span> IsStackFrame ( <var>frame</var> )</a></li>
-						<li><span class="item-toggle-none"></span><a href="#sec-isstackspan" title="IsStackFrameSpan ( span )"><span class="secnum">4.2</span> IsStackFrameSpan ( <var>span</var> )</a></li>
-						<li><span class="item-toggle-none"></span><a href="#sec-isstackposition" title="IsStackFramePosition ( position )"><span class="secnum">4.3</span> IsStackFramePosition ( <var>position</var> )</a></li>
-						<li><span class="item-toggle-none"></span><a href="#sec-fromstackframe" title="FromStackFrame ( frame )"><span class="secnum">4.4</span> FromStackFrame ( <var>frame</var> )</a></li>
-						<li><span class="item-toggle-none"></span><a href="#sec-fromstackframespan" title="FromStackFrameSpan ( span )"><span class="secnum">4.5</span> FromStackFrameSpan ( <var>span</var> )</a></li>
-						<li><span class="item-toggle-none"></span><a href="#sec-fromstackframeposition" title="FromStackFramePosition ( position )"><span class="secnum">4.6</span> FromStackFramePosition ( <var>position</var> )</a></li>
+						<li><span class="item-toggle-none"></span><a href="#sec-system-get-stack" title="System.getStack ( error )"><span class="secnum">1.1</span> System.getStack ( <var>error</var> )</a></li>
+						<li><span class="item-toggle-none"></span><a href="#sec-system-get-stack-string" title="System.getStackString ( error )"><span class="secnum">1.2</span> System.getStackString ( <var>error</var> )</a></li>
+					</ol>
+				</li>
+				<li><span class="item-toggle-none"></span><a href="#sec-getstack" title="GetStack ( error )"><span class="secnum">2</span> GetStack ( <var>error</var> )</a></li>
+				<li><span class="item-toggle-none"></span><a href="#sec-getstackstring" title="GetStackString ( error )"><span class="secnum">3</span> GetStackString ( <var>error</var> )</a></li>
+				<li><span class="item-toggle-none"></span><a href="#sec-getframestring" title="GetFrameString ( frame )"><span class="secnum">4</span> GetFrameString ( <var>frame</var> )</a></li>
+				<li><span class="item-toggle-none"></span><a href="#sec-getstackframespanstring" title="GetStackFrameSpanString( span )"><span class="secnum">5</span> GetStackFrameSpanString( <var>span</var> )</a></li>
+				<li><span class="item-toggle-none"></span><a href="#sec-getstackframepositionstring" title="GetStackFramePositionString( position )"><span class="secnum">6</span> GetStackFramePositionString( <var>position</var> )</a></li>
+				<li><span class="item-toggle-none"></span><a href="#sec-getstackcalls" title="GetStackCalls( error )"><span class="secnum">7</span> GetStackCalls( <var>error</var> )</a></li>
+				<li><span class="item-toggle">◢</span><a href="#sec-stack-frame-specification-type" title="The Stack Frame Specification Type"><span class="secnum">8</span> The Stack Frame Specification Type</a>
+					<ol class="toc">
+						<li><span class="item-toggle-none"></span><a href="#sec-isstackframe" title="IsStackFrame ( frame )"><span class="secnum">8.1</span> IsStackFrame ( <var>frame</var> )</a></li>
+						<li><span class="item-toggle-none"></span><a href="#sec-isstackspan" title="IsStackFrameSpan ( span )"><span class="secnum">8.2</span> IsStackFrameSpan ( <var>span</var> )</a></li>
+						<li><span class="item-toggle-none"></span><a href="#sec-isstackposition" title="IsStackFramePosition ( position )"><span class="secnum">8.3</span> IsStackFramePosition ( <var>position</var> )</a></li>
+						<li><span class="item-toggle-none"></span><a href="#sec-fromstackframe" title="FromStackFrame ( frame )"><span class="secnum">8.4</span> FromStackFrame ( <var>frame</var> )</a></li>
+						<li><span class="item-toggle-none"></span><a href="#sec-fromstackframespan" title="FromStackFrameSpan ( span )"><span class="secnum">8.5</span> FromStackFrameSpan ( <var>span</var> )</a></li>
+						<li><span class="item-toggle-none"></span><a href="#sec-fromstackframeposition" title="FromStackFramePosition ( position )"><span class="secnum">8.6</span> FromStackFramePosition ( <var>position</var> )</a></li>
 					</ol>
 				</li>
 				<li><span class="item-toggle">◢</span><a href="#sec-additional-built-in-properties" title="Additional Built-in Properties"><span class="secnum">A</span> Additional Built-in Properties</a>
@@ -233,22 +326,42 @@
 			</ol>
 		</div>
 	</div>
-	<h1 class="version">Stage 0 Draft / October 25, 2016</h1>
+	<h1 class="version">Stage 0 Draft / November 30, 2016</h1>
 	<h1 class="title">Error Stacks</h1>
 
-	<emu-clause id="sec-system-get-stack">
-		<h1><span class="secnum">1</span>System.getStack ( <var>error</var> )<span class="utils"><span class="anchor"><a href="#sec-system-get-stack">#</a></span></span>
+	<emu-clause id="sec-system">
+		<h1><span class="secnum">1</span>System<span class="utils"><span class="anchor"><a href="#sec-system">#</a></span></span>
 		</h1>
-		<p>When the <code>getStack</code> method is called with argument <var>error</var>, the following steps are taken:</p>
-		<emu-alg>
-			<ol>
-				<li>If <var>error</var> does not have an [[ErrorData]] internal slot, throw a
-					<emu-val>TypeError</emu-val> exception.</li>
-				<li>Return !
-					<emu-xref aoid="GetStack"><a href="#sec-getstack">GetStack</a></emu-xref>(<var>error</var>).
-				</li>
-			</ol>
-		</emu-alg>
+
+		<emu-clause id="sec-system-get-stack">
+			<h1><span class="secnum">1.1</span>System.getStack ( <var>error</var> )<span class="utils"><span class="anchor"><a href="#sec-system-get-stack">#</a></span></span>
+			</h1>
+			<p>When the <code>getStack</code> method is called with argument <var>error</var>, the following steps are taken:</p>
+			<emu-alg>
+				<ol>
+					<li>If <var>error</var> does not have an [[ErrorData]] internal slot, throw a
+						<emu-val>TypeError</emu-val> exception.</li>
+					<li>Return !
+						<emu-xref aoid="GetStack"><a href="#sec-getstack">GetStack</a></emu-xref>(<var>error</var>).
+					</li>
+				</ol>
+			</emu-alg>
+		</emu-clause>
+
+		<emu-clause id="sec-system-get-stack-string">
+			<h1><span class="secnum">1.2</span>System.getStackString ( <var>error</var> )<span class="utils"><span class="anchor"><a href="#sec-system-get-stack-string">#</a></span></span>
+			</h1>
+			<p>When the <code>getStackString</code> method is called with argument <var>error</var>, the following steps are taken:</p>
+			<emu-alg>
+				<ol>
+					<li>If <var>error</var> does not have an [[ErrorData]] internal slot, throw a
+						<emu-val>TypeError</emu-val> exception.</li>
+					<li>Return !
+						<emu-xref aoid="GetStackString"><a href="#sec-getstackstring">GetStackString</a></emu-xref>(<var>error</var>).
+					</li>
+				</ol>
+			</emu-alg>
+		</emu-clause>
 	</emu-clause>
 
 	<emu-clause id="sec-getstack" aoid="GetStack">
@@ -280,8 +393,117 @@
 		</emu-alg>
 	</emu-clause>
 
+	<emu-clause id="sec-getstackstring" aoid="GetStackString">
+		<h1><span class="secnum">3</span>GetStackString ( <var>error</var> )<span class="utils"><span class="anchor"><a href="#sec-getstackstring">#</a></span></span>
+		</h1>
+		<p>When the abstract operation <var>GetStackString</var> is called with argument <var>error</var>, the following steps are performed:</p>
+		<emu-alg>
+			<ol>
+				<li>Assert: <var>error</var> has an [[ErrorData]] internal slot.</li>
+				<li>Let <var>calls</var> be !
+					<emu-xref aoid="GetStackCalls"><a href="#sec-getstackcalls">GetStackCalls</a></emu-xref>(<var>error</var>).</li>
+				<li>Let <var>stackString</var> be a String consisting solely of the code unit 0x0020 (SPACE).</li>
+				<li>For each Stack Frame <var>frame</var> in <var>calls</var>,
+					<ol>
+						<li>If <var>stackString</var> does not consist solely of the code unit 0x0020 (SPACE),
+							<ol>
+								<li>Let <var>stackString</var> be the concatenation of <var>stackString</var>, the code unit 0x000A (LINE FEED), and the code unit 0x0020 (SPACE).</li>
+							</ol>
+						</li>
+						<li>Let <var>stackString</var> be the concatenation of <var>stackString</var> and !
+							<emu-xref aoid="GetFrameString"><a href="#sec-getframestring">GetFrameString</a></emu-xref>(<var>frame</var>).</li>
+					</ol>
+				</li>
+				<li>Return <var>stackString</var>.
+				</li>
+			</ol>
+		</emu-alg>
+	</emu-clause>
+
+	<emu-clause id="sec-getframestring" aoid="GetFrameString">
+		<h1><span class="secnum">4</span>GetFrameString ( <var>frame</var> )<span class="utils"><span class="anchor"><a href="#sec-getframestring">#</a></span></span>
+		</h1>
+		<p>When the abstract operation <var>GetFrameString</var> is called with argument <var>frame</var>, the following steps are performed:</p>
+		<emu-alg>
+			<ol>
+				<li>Assert:
+					<emu-xref aoid="IsStackFrame"><a href="#sec-isstackframe">IsStackFrame</a></emu-xref>(<var>frame</var>) is
+					<emu-val>true</emu-val>.</li>
+				<li>Let <var>source</var> be <var>frame</var>.[[Source]].</li>
+				<li>If
+					<emu-xref aoid="Type"><a href="https://tc39.github.io/ecma262/#sec-ecmascript-data-types-and-values">Type</a></emu-xref>(<var>source</var>) is not String,
+					<ol>
+						<li>Assert:
+							<emu-xref aoid="IsStackFrame"><a href="#sec-isstackframe">IsStackFrame</a></emu-xref>(<var>source</var>) is
+							<emu-val>true</emu-val>.</li>
+						<li>Let <var>source</var> be the concatenation of
+							<emu-val>"eval</emu-val>" and
+							<emu-xref aoid="GetFrameString"><a href="#sec-getframestring">GetFrameString</a></emu-xref>(<var>frame</var>).</li>
+					</ol>
+				</li>
+				<li>Assert:
+					<emu-xref aoid="Type"><a href="https://tc39.github.io/ecma262/#sec-ecmascript-data-types-and-values">Type</a></emu-xref>(<var>source</var>) is String.</li>
+				<li>Let <var>spanString</var> be
+					<emu-xref aoid="GetStackFrameSpanString"><a href="#sec-getstackframespanstring">GetStackFrameSpanString</a></emu-xref>(<var>source</var>.[[Span]]).</li>
+				<li>return a String formed by concatenating the code unit 0x0020 (SPACE),
+					<emu-val>"at"</emu-val>, the code unit 0x0020 (SPACE), <var>frame</var>.[[Name]], the code unit 0x0020 (SPACE),
+					<emu-val>"("</emu-val>, <var>source</var>, <var>spanString</var>, and
+					<emu-val>")"</emu-val>.
+				</li>
+			</ol>
+		</emu-alg>
+	</emu-clause>
+
+	<emu-clause id="sec-getstackframespanstring" aoid="GetStackFrameSpanString">
+		<h1><span class="secnum">5</span>GetStackFrameSpanString( <var>span</var> )<span class="utils"><span class="anchor"><a href="#sec-getstackframespanstring">#</a></span></span>
+		</h1>
+		<p>When the abstract operation <var>GetStackFrameSpanString</var> is called with argument <var>span</var>, the following steps are performed:</p>
+		<emu-alg>
+			<ol>
+				<li>Assert:
+					<emu-xref aoid="IsStackFrameSpan"><a href="#sec-isstackspan">IsStackFrameSpan</a></emu-xref>(<var>span</var>) is
+					<emu-val>true</emu-val>.</li>
+				<li>Let <var>spanString</var> be
+					<emu-xref aoid="GetStackFramePositionString"><a href="#sec-getstackframepositionstring">GetStackFramePositionString</a></emu-xref>(<var>span</var>.[[StartPosition]]).</li>
+				<li>If <var>span</var> has an [[EndPosition]] internal slot,
+					<ol>
+						<li>Let <var>spanString</var> be the concatenation of <var>spanString</var>,
+							<emu-val>"::"</emu-val>, and
+							<emu-xref aoid="GetStackFramePositionString"><a href="#sec-getstackframepositionstring">GetStackFramePositionString</a></emu-xref>(<var>span</var>.[[EndPosition]]).</li>
+					</ol>
+				</li>
+				<li>Return <var>spanString</var>.
+				</li>
+			</ol>
+		</emu-alg>
+	</emu-clause>
+
+	<emu-clause id="sec-getstackframepositionstring" aoid="GetStackFramePositionString">
+		<h1><span class="secnum">6</span>GetStackFramePositionString( <var>position</var> )<span class="utils"><span class="anchor"><a href="#sec-getstackframepositionstring">#</a></span></span>
+		</h1>
+		<p>When the abstract operation <var>GetStackFramePositionString</var> is called with argument <var>position</var>, the following steps are performed:</p>
+		<emu-alg>
+			<ol>
+				<li>Assert:
+					<emu-xref aoid="IsStackFramePosition"><a href="#sec-isstackposition">IsStackFramePosition</a></emu-xref>(<var>position</var>) is
+					<emu-val>true</emu-val>.</li>
+				<li>Let <var>positionString</var> be !
+					<emu-xref aoid="ToString"><a href="https://tc39.github.io/ecma262/#sec-tostring">ToString</a></emu-xref>(<var>position</var>.[[Line]]).</li>
+				<li>If <var>position</var> has a [[Column]] internal slot,
+					<ol>
+						<li>Let <var>positionString</var> be the concatenation of <var>positionString</var>,
+							<emu-val>":"</emu-val>, and !
+							<emu-xref aoid="ToString"><a href="https://tc39.github.io/ecma262/#sec-tostring">ToString</a></emu-xref>(<var>position</var>.[[Column]]).</li>
+					</ol>
+				</li>
+				<li>Return <var>positionString</var>.
+				</li>
+			</ol>
+		</emu-alg>
+	</emu-clause>
+
 	<emu-clause id="sec-getstackcalls" aoid="GetStackCalls">
-		<h1><span class="secnum">3</span>GetStackCalls( <var>error</var> )<span class="utils"><span class="anchor"><a href="#sec-getstackcalls">#</a></span></span>
+		<h1><span class="secnum">7</span>GetStackCalls( <var>error</var> )<span class="utils"><span class="anchor"><a href="#sec-getstackcalls">#</a></span></span>
 		</h1>
 		<p>When the abstract operation <var>GetStackCalls</var> is called with argument <var>error</var>, the following steps are performed:</p>
 		<emu-alg>
@@ -309,11 +531,11 @@
 	</emu-clause>
 
 	<emu-clause id="sec-stack-frame-specification-type">
-		<h1><span class="secnum">4</span>The Stack Frame Specification Type<span class="utils"><span class="anchor"><a href="#sec-stack-frame-specification-type">#</a></span></span>
+		<h1><span class="secnum">8</span>The Stack Frame Specification Type<span class="utils"><span class="anchor"><a href="#sec-stack-frame-specification-type">#</a></span></span>
 		</h1>
 
 		<emu-clause id="sec-isstackframe" aoid="IsStackFrame">
-			<h1><span class="secnum">4.1</span>IsStackFrame ( <var>frame</var> )<span class="utils"><span class="anchor"><a href="#sec-isstackframe">#</a></span></span>
+			<h1><span class="secnum">8.1</span>IsStackFrame ( <var>frame</var> )<span class="utils"><span class="anchor"><a href="#sec-isstackframe">#</a></span></span>
 			</h1>
 			<p>When the abstract operation IsStackFrame is called with Stack Frame <var>frame</var>, the following steps are performed:</p>
 			<emu-alg>
@@ -347,7 +569,7 @@
 		</emu-clause>
 
 		<emu-clause id="sec-isstackspan" aoid="IsStackFrameSpan">
-			<h1><span class="secnum">4.2</span>IsStackFrameSpan ( <var>span</var> )<span class="utils"><span class="anchor"><a href="#sec-isstackspan">#</a></span></span>
+			<h1><span class="secnum">8.2</span>IsStackFrameSpan ( <var>span</var> )<span class="utils"><span class="anchor"><a href="#sec-isstackspan">#</a></span></span>
 			</h1>
 			<p>When the abstract operation IsStackFrameSpan is called with argument <var>span</var>, the following steps are performed:</p>
 			<emu-alg>
@@ -377,7 +599,7 @@
 		</emu-clause>
 
 		<emu-clause id="sec-isstackposition" aoid="IsStackFramePosition">
-			<h1><span class="secnum">4.3</span>IsStackFramePosition ( <var>position</var> )<span class="utils"><span class="anchor"><a href="#sec-isstackposition">#</a></span></span>
+			<h1><span class="secnum">8.3</span>IsStackFramePosition ( <var>position</var> )<span class="utils"><span class="anchor"><a href="#sec-isstackposition">#</a></span></span>
 			</h1>
 			<p>When the abstract operation IsStackFramePosition is called with argument <var>position</var>, the following steps are performed:</p>
 			<emu-alg>
@@ -403,7 +625,7 @@
 		</emu-clause>
 
 		<emu-clause id="sec-fromstackframe" aoid="FromStackFrame">
-			<h1><span class="secnum">4.4</span>FromStackFrame ( <var>frame</var> )<span class="utils"><span class="anchor"><a href="#sec-fromstackframe">#</a></span></span>
+			<h1><span class="secnum">8.4</span>FromStackFrame ( <var>frame</var> )<span class="utils"><span class="anchor"><a href="#sec-fromstackframe">#</a></span></span>
 			</h1>
 			<p>When the abstract operation FromStackFrame is called with Stack Frame <var>frame</var>, the following steps are taken:</p>
 			<emu-alg>
@@ -457,7 +679,7 @@
 		</emu-clause>
 
 		<emu-clause id="sec-fromstackframespan" aoid="FromStackFrameSpan">
-			<h1><span class="secnum">4.5</span>FromStackFrameSpan ( <var>span</var> )<span class="utils"><span class="anchor"><a href="#sec-fromstackframespan">#</a></span></span>
+			<h1><span class="secnum">8.5</span>FromStackFrameSpan ( <var>span</var> )<span class="utils"><span class="anchor"><a href="#sec-fromstackframespan">#</a></span></span>
 			</h1>
 			<p>When the abstract operation FromStackFrameSpan is called with argument <var>span</var>, the following steps are taken:</p>
 			<emu-alg>
@@ -485,7 +707,7 @@
 		</emu-clause>
 
 		<emu-clause id="sec-fromstackframeposition" aoid="FromStackFramePosition">
-			<h1><span class="secnum">4.6</span>FromStackFramePosition ( <var>position</var> )<span class="utils"><span class="anchor"><a href="#sec-fromstackframeposition">#</a></span></span>
+			<h1><span class="secnum">8.6</span>FromStackFramePosition ( <var>position</var> )<span class="utils"><span class="anchor"><a href="#sec-fromstackframeposition">#</a></span></span>
 			</h1>
 			<p>When the abstract operation FromStackFramePosition is called with argument <var>position</var>, the following steps are taken:</p>
 			<emu-alg>
@@ -536,7 +758,7 @@
 						<li>If <var>E</var> does not have an [[ErrorData]] internal slot, throw a
 							<emu-val>TypeError</emu-val> exception.</li>
 						<li>Return !
-							<emu-xref aoid="GetStack"><a href="#sec-getstack">GetStack</a></emu-xref>(<var>error</var>).
+							<emu-xref aoid="GetStackString"><a href="#sec-getstackstring">GetStackString</a></emu-xref>(<var>error</var>).
 						</li>
 					</ol>
 				</emu-alg>

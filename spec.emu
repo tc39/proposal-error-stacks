@@ -9,13 +9,26 @@ stage: 0
 contributors: Jordan Harband, Mark Miller
 </pre>
 
-<emu-clause id="sec-system-get-stack">
-	<h1>System.getStack ( _error_ )</h1>
-	<p>When the `getStack` method is called with argument _error_, the following steps are taken:</p>
-	<emu-alg>
-		1. If _error_ does not have an [[ErrorData]] internal slot, throw a *TypeError* exception.
-		1. Return ! GetStack(_error_).
-	</emu-alg>
+<emu-clause id="sec-system">
+    <h1>System</h1>
+
+	<emu-clause id="sec-system-get-stack">
+		<h1>System.getStack ( _error_ )</h1>
+		<p>When the `getStack` method is called with argument _error_, the following steps are taken:</p>
+		<emu-alg>
+			1. If _error_ does not have an [[ErrorData]] internal slot, throw a *TypeError* exception.
+			1. Return ! GetStack(_error_).
+		</emu-alg>
+	</emu-clause>
+
+	<emu-clause id="sec-system-get-stack-string">
+		<h1>System.getStackString ( _error_ )</h1>
+		<p>When the `getStackString` method is called with argument _error_, the following steps are taken:</p>
+		<emu-alg>
+			1. If _error_ does not have an [[ErrorData]] internal slot, throw a *TypeError* exception.
+			1. Return ! GetStackString(_error_).
+		</emu-alg>
+	</emu-clause>
 </emu-clause>
 
 <emu-clause id="sec-getstack" aoid="GetStack">
@@ -30,6 +43,60 @@ contributors: Jordan Harband, Mark Miller
 		1. Let _status_ be ! SetIntegrityLevel(_obj_, *"frozen"*).
 		1. Assert: _status_ is *true*.
 		1. Return _obj_.
+	</emu-alg>
+</emu-clause>
+
+<emu-clause id="sec-getstackstring" aoid="GetStackString">
+	<h1>GetStackString ( _error_ )</h1>
+	<p>When the abstract operation _GetStackString_ is called with argument _error_, the following steps are performed:</p>
+	<emu-alg>
+		1. Assert: _error_ has an [[ErrorData]] internal slot.
+		1. Let _calls_ be ! GetStackCalls(_error_).
+		1. Let _stackString_ be a String consisting solely of the code unit 0x0020 (SPACE).
+		1. For each Stack Frame _frame_ in _calls_,
+			1. If _stackString_ does not consist solely of the code unit 0x0020 (SPACE),
+				1. Let _stackString_ be the concatenation of _stackString_, the code unit 0x000A (LINE FEED), and the code unit 0x0020 (SPACE).
+			1. Let _stackString_ be the concatenation of _stackString_ and ! GetFrameString(_frame_).
+		1. Return _stackString_.
+	</emu-alg>
+</emu-clause>
+
+<emu-clause id="sec-getframestring" aoid="GetFrameString">
+	<h1>GetFrameString ( _frame_ )</h1>
+	<p>When the abstract operation _GetFrameString_ is called with argument _frame_, the following steps are performed:</p>
+	<emu-alg>
+		1. Assert: IsStackFrame(_frame_) is *true*.
+		1. Let _source_ be _frame_.[[Source]].
+		1. If Type(_source_) is not String,
+			1. Assert: IsStackFrame(_source_) is *true*.
+			1. Let _source_ be the concatenation of *"eval*" and GetFrameString(_frame_).
+		1. Assert: Type(_source_) is String.
+		1. Let _spanString_ be GetStackFrameSpanString(_source_.[[Span]]).
+		1. return a String formed by concatenating the code unit 0x0020 (SPACE), *"at"*, the code unit 0x0020 (SPACE), _frame_.[[Name]], the code unit 0x0020 (SPACE), *"("*, _source_, _spanString_, and *")"*.
+	</emu-alg>
+</emu-clause>
+
+<emu-clause id="sec-getstackframespanstring" aoid="GetStackFrameSpanString">
+	<h1>GetStackFrameSpanString( _span_ )</h1>
+	<p>When the abstract operation _GetStackFrameSpanString_ is called with argument _span_, the following steps are performed:</p>
+	<emu-alg>
+		1. Assert: IsStackFrameSpan(_span_) is *true*.
+		1. Let _spanString_ be GetStackFramePositionString(_span_.[[StartPosition]]).
+		1. If _span_ has an [[EndPosition]] internal slot,
+			1. Let _spanString_ be the concatenation of _spanString_, *"::"*, and GetStackFramePositionString(_span_.[[EndPosition]]).
+		1. Return _spanString_.
+	</emu-alg>
+</emu-clause>
+
+<emu-clause id="sec-getstackframepositionstring" aoid="GetStackFramePositionString">
+	<h1>GetStackFramePositionString( _position_ )</h1>
+	<p>When the abstract operation _GetStackFramePositionString_ is called with argument _position_, the following steps are performed:</p>
+	<emu-alg>
+		1. Assert: IsStackFramePosition(_position_) is *true*.
+		1. Let _positionString_ be ! ToString(_position_.[[Line]]).
+		1. If _position_ has a [[Column]] internal slot,
+			1. Let _positionString_ be the concatenation of _positionString_, *":"*, and ! ToString(_position_.[[Column]]).
+		1. Return _positionString_.
 	</emu-alg>
 </emu-clause>
 
@@ -159,7 +226,7 @@ contributors: Jordan Harband, Mark Miller
 				1. Let _E_ be the *this* value.
 				1. If Type(_E_) is not Object, throw a *TypeError* exception.
 				1. If _E_ does not have an [[ErrorData]] internal slot, throw a *TypeError* exception.
-				1. Return ! GetStack(_error_).
+				1. Return ! GetStackString(_error_).
 			</emu-alg>
 		</emu-annex>
 	</emu-annex>
