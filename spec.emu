@@ -38,7 +38,7 @@ contributors: Jordan Harband, Mark Miller
 		1. Assert: _error_ has an [[ErrorData]] internal slot.
 		1. Let _calls_ be ! GetStackCalls(_error_).
 		1. Let _obj_ be ! ObjectCreate(%ObjectPrototype%).
-		1. Perform ! CreateDataProperty(_obj_, *"calls"*, _value_).
+		1. Perform ! CreateDataProperty(_obj_, *"calls"*, _calls_).
 		1. Assert: The above CreateDataProperty operation returns *true*.
 		1. Let _status_ be ! SetIntegrityLevel(_obj_, *"frozen"*).
 		1. Assert: _status_ is *true*.
@@ -65,13 +65,13 @@ contributors: Jordan Harband, Mark Miller
 	<h1>GetFrameString ( _frame_ )</h1>
 	<p>When the abstract operation _GetFrameString_ is called with argument _frame_, the following steps are performed:</p>
 	<emu-alg>
-		1. Assert: IsStackFrame(_frame_) is *true*.
+		1. Assert: ! IsStackFrame(_frame_) is *true*.
 		1. Let _source_ be _frame_.[[Source]].
 		1. If Type(_source_) is not String,
-			1. Assert: IsStackFrame(_source_) is *true*.
-			1. Let _source_ be the concatenation of *"eval*" and GetFrameString(_frame_).
-		1. Assert: Type(_source_) is String.
-		1. Let _spanString_ be GetStackFrameSpanString(_source_.[[Span]]).
+			1. Assert: ! IsStackFrame(_source_) is *true*.
+			1. Let _source_ be the concatenation of *"eval*" and ! GetFrameString(_source_).
+		1. Assert: ! Type(_source_) is String.
+		1. Let _spanString_ be ! GetStackFrameSpanString(_source_.[[Span]]).
 		1. return a String formed by concatenating the code unit 0x0020 (SPACE), *"at"*, the code unit 0x0020 (SPACE), _frame_.[[Name]], the code unit 0x0020 (SPACE), *"("*, _source_, _spanString_, and *")"*.
 	</emu-alg>
 </emu-clause>

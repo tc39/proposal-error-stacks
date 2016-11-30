@@ -385,7 +385,7 @@
 						<emu-xref href="#sec-properties-of-the-object-prototype-object"><a href="https://tc39.github.io/ecma262/#sec-properties-of-the-object-prototype-object">%ObjectPrototype%</a></emu-xref>).</li>
 					<li>Perform !
 						<emu-xref aoid="CreateDataProperty"><a href="https://tc39.github.io/ecma262/#sec-createdataproperty">CreateDataProperty</a></emu-xref>(<var>obj</var>,
-						<emu-val>"calls"</emu-val>, <var>value</var>).</li>
+						<emu-val>"calls"</emu-val>, <var>calls</var>).</li>
 					<li>Assert: The above
 						<emu-xref aoid="CreateDataProperty"><a href="https://tc39.github.io/ecma262/#sec-createdataproperty">CreateDataProperty</a></emu-xref> operation returns
 						<emu-val>true</emu-val>.</li>
@@ -433,24 +433,24 @@
 			<p>When the abstract operation <var>GetFrameString</var> is called with argument <var>frame</var>, the following steps are performed:</p>
 			<emu-alg>
 				<ol>
-					<li>Assert:
+					<li>Assert: !
 						<emu-xref aoid="IsStackFrame"><a href="#sec-isstackframe">IsStackFrame</a></emu-xref>(<var>frame</var>) is
 						<emu-val>true</emu-val>.</li>
 					<li>Let <var>source</var> be <var>frame</var>.[[Source]].</li>
 					<li>If
 						<emu-xref aoid="Type"><a href="https://tc39.github.io/ecma262/#sec-ecmascript-data-types-and-values">Type</a></emu-xref>(<var>source</var>) is not String,
 						<ol>
-							<li>Assert:
+							<li>Assert: !
 								<emu-xref aoid="IsStackFrame"><a href="#sec-isstackframe">IsStackFrame</a></emu-xref>(<var>source</var>) is
 								<emu-val>true</emu-val>.</li>
 							<li>Let <var>source</var> be the concatenation of
-								<emu-val>"eval</emu-val>" and
-								<emu-xref aoid="GetFrameString"><a href="#sec-getframestring">GetFrameString</a></emu-xref>(<var>frame</var>).</li>
+								<emu-val>"eval</emu-val>" and !
+								<emu-xref aoid="GetFrameString"><a href="#sec-getframestring">GetFrameString</a></emu-xref>(<var>source</var>).</li>
 						</ol>
 					</li>
-					<li>Assert:
+					<li>Assert: !
 						<emu-xref aoid="Type"><a href="https://tc39.github.io/ecma262/#sec-ecmascript-data-types-and-values">Type</a></emu-xref>(<var>source</var>) is String.</li>
-					<li>Let <var>spanString</var> be
+					<li>Let <var>spanString</var> be !
 						<emu-xref aoid="GetStackFrameSpanString"><a href="#sec-getstackframespanstring">GetStackFrameSpanString</a></emu-xref>(<var>source</var>.[[Span]]).</li>
 					<li>return a String formed by concatenating the code unit 0x0020 (SPACE),
 						<emu-val>"at"</emu-val>, the code unit 0x0020 (SPACE), <var>frame</var>.[[Name]], the code unit 0x0020 (SPACE),
