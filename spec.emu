@@ -212,6 +212,10 @@ contributors: Jordan Harband, Mark Miller
 	</emu-clause>
 </emu-clause>
 
+<emu-annex id="sec-grammar-summary">
+	<h1>Placeholder to ensure correct annex lettering</h1>
+</emu-annex>
+
 <emu-annex id="sec-additional-built-in-properties">
 	<h1>Additional Built-in Properties</h1>
 	<p>When the ECMAScript host is a web browser the following additional properties of the standard built-in objects are defined.</p>
