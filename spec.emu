@@ -37,8 +37,11 @@ contributors: Jordan Harband, Mark Miller
 	<emu-alg>
 		1. Assert: _error_ has an [[ErrorData]] internal slot.
 		1. Let _calls_ be ! GetStackCalls(_error_).
+		1. Let _string_ be ! GetStackString(_error_).
 		1. Let _obj_ be ! ObjectCreate(%ObjectPrototype%).
 		1. Perform ! CreateDataProperty(_obj_, *"calls"*, _calls_).
+		1. Assert: The above CreateDataProperty operation returns *true*.
+		1. Perform ! CreateDataProperty(_obj_, *"string"*, _string_).
 		1. Assert: The above CreateDataProperty operation returns *true*.
 		1. Let _status_ be ! SetIntegrityLevel(_obj_, *"frozen"*).
 		1. Assert: _status_ is *true*.

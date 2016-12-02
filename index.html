@@ -344,7 +344,7 @@
 		</div>
 	</div>
 	<div id="spec-container">
-		<h1 class="version">Stage 0 Draft / November 30, 2016</h1>
+		<h1 class="version">Stage 0 Draft / December 2, 2016</h1>
 		<h1 class="title">Error Stacks</h1>
 
 		<emu-clause id="sec-system">
@@ -391,12 +391,20 @@
 					<li>Assert: <var>error</var> has an [[ErrorData]] internal slot.</li>
 					<li>Let <var>calls</var> be !
 						<emu-xref aoid="GetStackCalls"><a href="#sec-getstackcalls">GetStackCalls</a></emu-xref>(<var>error</var>).</li>
+					<li>Let <var>string</var> be !
+						<emu-xref aoid="GetStackString"><a href="#sec-getstackstring">GetStackString</a></emu-xref>(<var>error</var>).</li>
 					<li>Let <var>obj</var> be !
 						<emu-xref aoid="ObjectCreate"><a href="https://tc39.github.io/ecma262/#sec-objectcreate">ObjectCreate</a></emu-xref>(
 						<emu-xref href="#sec-properties-of-the-object-prototype-object"><a href="https://tc39.github.io/ecma262/#sec-properties-of-the-object-prototype-object">%ObjectPrototype%</a></emu-xref>).</li>
 					<li>Perform !
 						<emu-xref aoid="CreateDataProperty"><a href="https://tc39.github.io/ecma262/#sec-createdataproperty">CreateDataProperty</a></emu-xref>(<var>obj</var>,
 						<emu-val>"calls"</emu-val>, <var>calls</var>).</li>
+					<li>Assert: The above
+						<emu-xref aoid="CreateDataProperty"><a href="https://tc39.github.io/ecma262/#sec-createdataproperty">CreateDataProperty</a></emu-xref> operation returns
+						<emu-val>true</emu-val>.</li>
+					<li>Perform !
+						<emu-xref aoid="CreateDataProperty"><a href="https://tc39.github.io/ecma262/#sec-createdataproperty">CreateDataProperty</a></emu-xref>(<var>obj</var>,
+						<emu-val>"string"</emu-val>, <var>string</var>).</li>
 					<li>Assert: The above
 						<emu-xref aoid="CreateDataProperty"><a href="https://tc39.github.io/ecma262/#sec-createdataproperty">CreateDataProperty</a></emu-xref> operation returns
 						<emu-val>true</emu-val>.</li>
