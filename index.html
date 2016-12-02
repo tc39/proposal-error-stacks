@@ -359,7 +359,7 @@
 					<ol>
 						<li>If <var>error</var> does not have an [[ErrorData]] internal slot, throw a
 							<emu-val>TypeError</emu-val> exception.</li>
-						<li>Return !
+						<li>Return ?
 							<emu-xref aoid="GetStack"><a href="#sec-getstack">GetStack</a></emu-xref>(<var>error</var>).
 						</li>
 					</ol>
@@ -374,7 +374,7 @@
 					<ol>
 						<li>If <var>error</var> does not have an [[ErrorData]] internal slot, throw a
 							<emu-val>TypeError</emu-val> exception.</li>
-						<li>Return !
+						<li>Return ?
 							<emu-xref aoid="GetStackString"><a href="#sec-getstackstring">GetStackString</a></emu-xref>(<var>error</var>).
 						</li>
 					</ol>
@@ -391,7 +391,7 @@
 					<li>Assert: <var>error</var> has an [[ErrorData]] internal slot.</li>
 					<li>Let <var>frames</var> be !
 						<emu-xref aoid="GetStackFrames"><a href="#sec-getstackframes">GetStackFrames</a></emu-xref>(<var>error</var>).</li>
-					<li>Let <var>string</var> be !
+					<li>Let <var>string</var> be ?
 						<emu-xref aoid="GetStackString"><a href="#sec-getstackstring">GetStackString</a></emu-xref>(<var>error</var>).</li>
 					<li>Let <var>obj</var> be !
 						<emu-xref aoid="ObjectCreate"><a href="https://tc39.github.io/ecma262/#sec-objectcreate">ObjectCreate</a></emu-xref>(
@@ -426,20 +426,23 @@
 			<emu-alg>
 				<ol>
 					<li>Assert: <var>error</var> has an [[ErrorData]] internal slot.</li>
+					<li>Let <var>errorString</var> be ?
+						<emu-xref aoid="ToString"><a href="https://tc39.github.io/ecma262/#sec-tostring">ToString</a></emu-xref>(<var>error</var>).</li>
 					<li>Let <var>frames</var> be !
 						<emu-xref aoid="GetStackFrames"><a href="#sec-getstackframes">GetStackFrames</a></emu-xref>(<var>error</var>).</li>
-					<li>Let <var>stackString</var> be a String consisting solely of the code unit 0x0020 (SPACE).</li>
+					<li>Let <var>frameString</var> be a String consisting solely of the code unit 0x0020 (SPACE).</li>
 					<li>For each Stack Frame <var>frame</var> in <var>frames</var>,
 						<ol>
-							<li>If <var>stackString</var> does not consist solely of the code unit 0x0020 (SPACE),
+							<li>If <var>frameString</var> does not consist solely of the code unit 0x0020 (SPACE),
 								<ol>
-									<li>Let <var>stackString</var> be the concatenation of <var>stackString</var>, the code unit 0x000A (LINE FEED), and the code unit 0x0020 (SPACE).</li>
+									<li>Let <var>frameString</var> be the concatenation of <var>frameString</var>, the code unit 0x000A (LINE FEED), and the code unit 0x0020 (SPACE).</li>
 								</ol>
 							</li>
-							<li>Let <var>stackString</var> be the concatenation of <var>stackString</var> and !
+							<li>Let <var>frameString</var> be the concatenation of <var>frameString</var> and !
 								<emu-xref aoid="GetFrameString"><a href="#sec-getframestring">GetFrameString</a></emu-xref>(<var>frame</var>).</li>
 						</ol>
 					</li>
+					<li>Let <var>stackString</var> be the concatenation of <var>errorString</var>, the code unit 0x000A (LINE FEED), and <var>frameString</var>.</li>
 					<li>Return <var>stackString</var>.
 					</li>
 				</ol>
@@ -788,7 +791,7 @@
 								<emu-val>TypeError</emu-val> exception.</li>
 							<li>If <var>E</var> does not have an [[ErrorData]] internal slot, throw a
 								<emu-val>TypeError</emu-val> exception.</li>
-							<li>Return !
+							<li>Return ?
 								<emu-xref aoid="GetStackString"><a href="#sec-getstackstring">GetStackString</a></emu-xref>(<var>error</var>).
 							</li>
 						</ol>

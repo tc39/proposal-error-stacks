@@ -17,7 +17,7 @@ contributors: Jordan Harband, Mark Miller
 		<p>When the `getStack` method is called with argument _error_, the following steps are taken:</p>
 		<emu-alg>
 			1. If _error_ does not have an [[ErrorData]] internal slot, throw a *TypeError* exception.
-			1. Return ! GetStack(_error_).
+			1. Return ? GetStack(_error_).
 		</emu-alg>
 	</emu-clause>
 
@@ -26,7 +26,7 @@ contributors: Jordan Harband, Mark Miller
 		<p>When the `getStackString` method is called with argument _error_, the following steps are taken:</p>
 		<emu-alg>
 			1. If _error_ does not have an [[ErrorData]] internal slot, throw a *TypeError* exception.
-			1. Return ! GetStackString(_error_).
+			1. Return ? GetStackString(_error_).
 		</emu-alg>
 	</emu-clause>
 </emu-clause>
@@ -37,7 +37,7 @@ contributors: Jordan Harband, Mark Miller
 	<emu-alg>
 		1. Assert: _error_ has an [[ErrorData]] internal slot.
 		1. Let _frames_ be ! GetStackFrames(_error_).
-		1. Let _string_ be ! GetStackString(_error_).
+		1. Let _string_ be ? GetStackString(_error_).
 		1. Let _obj_ be ! ObjectCreate(%ObjectPrototype%).
 		1. Perform ! CreateDataProperty(_obj_, *"frames"*, _frames_).
 		1. Assert: The above CreateDataProperty operation returns *true*.
@@ -54,12 +54,14 @@ contributors: Jordan Harband, Mark Miller
 	<p>When the abstract operation _GetStackString_ is called with argument _error_, the following steps are performed:</p>
 	<emu-alg>
 		1. Assert: _error_ has an [[ErrorData]] internal slot.
+		1. Let _errorString_ be ? ToString(_error_).
 		1. Let _frames_ be ! GetStackFrames(_error_).
-		1. Let _stackString_ be a String consisting solely of the code unit 0x0020 (SPACE).
+		1. Let _frameString_ be a String consisting solely of the code unit 0x0020 (SPACE).
 		1. For each Stack Frame _frame_ in _frames_,
-			1. If _stackString_ does not consist solely of the code unit 0x0020 (SPACE),
-				1. Let _stackString_ be the concatenation of _stackString_, the code unit 0x000A (LINE FEED), and the code unit 0x0020 (SPACE).
-			1. Let _stackString_ be the concatenation of _stackString_ and ! GetFrameString(_frame_).
+			1. If _frameString_ does not consist solely of the code unit 0x0020 (SPACE),
+				1. Let _frameString_ be the concatenation of _frameString_, the code unit 0x000A (LINE FEED), and the code unit 0x0020 (SPACE).
+			1. Let _frameString_ be the concatenation of _frameString_ and ! GetFrameString(_frame_).
+		1. Let _stackString_ be the concatenation of _errorString_, the code unit 0x000A (LINE FEED), and _frameString_.
 		1. Return _stackString_.
 	</emu-alg>
 </emu-clause>
@@ -233,7 +235,7 @@ contributors: Jordan Harband, Mark Miller
 				1. Let _E_ be the *this* value.
 				1. If ! Type(_E_) is not Object, throw a *TypeError* exception.
 				1. If _E_ does not have an [[ErrorData]] internal slot, throw a *TypeError* exception.
-				1. Return ! GetStackString(_error_).
+				1. Return ? GetStackString(_error_).
 			</emu-alg>
 		</emu-annex>
 	</emu-annex>
