@@ -486,15 +486,15 @@
 			<p>When the abstract operation <var>GetStackFrameSpanString</var> is called with argument <var>span</var>, the following steps are performed:</p>
 			<emu-alg>
 				<ol>
-					<li>Assert:
+					<li>Assert: !
 						<emu-xref aoid="IsStackFrameSpan"><a href="#sec-isstackspan">IsStackFrameSpan</a></emu-xref>(<var>span</var>) is
 						<emu-val>true</emu-val>.</li>
-					<li>Let <var>spanString</var> be
+					<li>Let <var>spanString</var> be !
 						<emu-xref aoid="GetStackFramePositionString"><a href="#sec-getstackframepositionstring">GetStackFramePositionString</a></emu-xref>(<var>span</var>.[[StartPosition]]).</li>
 					<li>If <var>span</var> has an [[EndPosition]] internal slot,
 						<ol>
 							<li>Let <var>spanString</var> be the concatenation of <var>spanString</var>,
-								<emu-val>"::"</emu-val>, and
+								<emu-val>"::"</emu-val>, and !
 								<emu-xref aoid="GetStackFramePositionString"><a href="#sec-getstackframepositionstring">GetStackFramePositionString</a></emu-xref>(<var>span</var>.[[EndPosition]]).</li>
 						</ol>
 					</li>
@@ -510,7 +510,7 @@
 			<p>When the abstract operation <var>GetStackFramePositionString</var> is called with argument <var>position</var>, the following steps are performed:</p>
 			<emu-alg>
 				<ol>
-					<li>Assert:
+					<li>Assert: !
 						<emu-xref aoid="IsStackFramePosition"><a href="#sec-isstackposition">IsStackFramePosition</a></emu-xref>(<var>position</var>) is
 						<emu-val>true</emu-val>.</li>
 					<li>Let <var>positionString</var> be !
@@ -566,7 +566,7 @@
 				<p>When the abstract operation IsStackFrame is called with Stack Frame <var>frame</var>, the following steps are performed:</p>
 				<emu-alg>
 					<ol>
-						<li>If
+						<li>If !
 							<emu-xref aoid="Type"><a href="https://tc39.github.io/ecma262/#sec-ecmascript-data-types-and-values">Type</a></emu-xref>(<var>frame</var>) is not Object, return
 							<emu-val>false</emu-val>.</li>
 						<li>If <var>frame</var> does not have a [[Name]] internal slot, return
@@ -575,15 +575,15 @@
 							<emu-val>false</emu-val>.</li>
 						<li>If <var>frame</var> does not have a [[Span]] internal slot, return
 							<emu-val>false</emu-val>.</li>
-						<li>If
+						<li>If !
 							<emu-xref aoid="Type"><a href="https://tc39.github.io/ecma262/#sec-ecmascript-data-types-and-values">Type</a></emu-xref>(<var>frame</var>.[[Name]]) is not String, return
 							<emu-val>false</emu-val>.</li>
-						<li>If
-							<emu-xref aoid="Type"><a href="https://tc39.github.io/ecma262/#sec-ecmascript-data-types-and-values">Type</a></emu-xref>(<var>frame</var>.[[Source]]) is not String, and
+						<li>If !
+							<emu-xref aoid="Type"><a href="https://tc39.github.io/ecma262/#sec-ecmascript-data-types-and-values">Type</a></emu-xref>(<var>frame</var>.[[Source]]) is not String, and !
 							<emu-xref aoid="IsStackFrame"><a href="#sec-isstackframe">IsStackFrame</a></emu-xref>(<var>source</var>) is not
 							<emu-val>true</emu-val>, return
 							<emu-val>false</emu-val>.</li>
-						<li>If
+						<li>If !
 							<emu-xref aoid="IsStackFrameSpan"><a href="#sec-isstackspan">IsStackFrameSpan</a></emu-xref>(<var>frame</var>.[[Span]]) is not
 							<emu-val>true</emu-val>, return
 							<emu-val>false</emu-val>.</li>
@@ -600,18 +600,18 @@
 				<p>When the abstract operation IsStackFrameSpan is called with argument <var>span</var>, the following steps are performed:</p>
 				<emu-alg>
 					<ol>
-						<li>If
+						<li>If !
 							<emu-xref aoid="Type"><a href="https://tc39.github.io/ecma262/#sec-ecmascript-data-types-and-values">Type</a></emu-xref>(<var>span</var>) is not Object, return
 							<emu-val>false</emu-val>.</li>
 						<li>If <var>span</var> does not have a [[StartPosition]] internal slot, return
 							<emu-val>false</emu-val>.</li>
-						<li>If
+						<li>If !
 							<emu-xref aoid="IsStackFramePosition"><a href="#sec-isstackposition">IsStackFramePosition</a></emu-xref>(<var>span</var>.[[StartPosition]]) is not
 							<emu-val>true</emu-val>, return
 							<emu-val>false</emu-val>.</li>
 						<li>If <var>span</var> has an [[EndPosition]] internal slot,
 							<ol>
-								<li>If
+								<li>If !
 									<emu-xref aoid="IsStackFramePosition"><a href="#sec-isstackposition">IsStackFramePosition</a></emu-xref>(<var>span</var>.[[EndPosition]]) is not
 									<emu-val>true</emu-val>, return
 									<emu-val>false</emu-val>.</li>
@@ -630,7 +630,7 @@
 				<p>When the abstract operation IsStackFramePosition is called with argument <var>position</var>, the following steps are performed:</p>
 				<emu-alg>
 					<ol>
-						<li>If
+						<li>If !
 							<emu-xref aoid="Type"><a href="https://tc39.github.io/ecma262/#sec-ecmascript-data-types-and-values">Type</a></emu-xref>(<var>position</var>) is not Object, return
 							<emu-val>false</emu-val>.</li>
 						<li>If <var>position</var> does not have a [[Line]] internal slot, return
@@ -656,10 +656,10 @@
 				<p>When the abstract operation FromStackFrame is called with Stack Frame <var>frame</var>, the following steps are taken:</p>
 				<emu-alg>
 					<ol>
-						<li>Assert:
+						<li>Assert: !
 							<emu-xref aoid="IsStackFrame"><a href="#sec-isstackframe">IsStackFrame</a></emu-xref>(<var>frame</var>) is
 							<emu-val>true</emu-val>.</li>
-						<li>Let <var>obj</var> be
+						<li>Let <var>obj</var> be !
 							<emu-xref aoid="ObjectCreate"><a href="https://tc39.github.io/ecma262/#sec-objectcreate">ObjectCreate</a></emu-xref>(
 							<emu-xref href="#sec-properties-of-the-object-prototype-object"><a href="https://tc39.github.io/ecma262/#sec-properties-of-the-object-prototype-object">%ObjectPrototype%</a></emu-xref>).</li>
 						<li>Assert: <var>obj</var> is an extensible ordinary object with no own properties.</li>
@@ -667,7 +667,7 @@
 							<emu-xref aoid="CreateDataProperty"><a href="https://tc39.github.io/ecma262/#sec-createdataproperty">CreateDataProperty</a></emu-xref>(<var>obj</var>,
 							<emu-val>"name"</emu-val>, <var>frame</var>.[[Name]]).</li>
 						<li>Let <var>source</var> be <var>frame</var>.[[Source]].</li>
-						<li>If
+						<li>If !
 							<emu-xref aoid="Type"><a href="https://tc39.github.io/ecma262/#sec-ecmascript-data-types-and-values">Type</a></emu-xref>(<var>source</var>) is String,
 							<ol>
 								<li>Perform !
@@ -677,7 +677,7 @@
 						</li>
 						<li>Else,
 							<ol>
-								<li>Assert:
+								<li>Assert: !
 									<emu-xref aoid="IsStackFrame"><a href="#sec-isstackframe">IsStackFrame</a></emu-xref>(<var>source</var>) is
 									<emu-val>true</emu-val>.</li>
 								<li>Perform !
@@ -710,7 +710,7 @@
 				<p>When the abstract operation FromStackFrameSpan is called with argument <var>span</var>, the following steps are taken:</p>
 				<emu-alg>
 					<ol>
-						<li>Assert:
+						<li>Assert: !
 							<emu-xref aoid="IsStackFrameSpan"><a href="#sec-isstackspan">IsStackFrameSpan</a></emu-xref>(<var>span</var>) is
 							<emu-val>true</emu-val>.</li>
 						<li>Let <var>list</var> be a new empty
@@ -738,7 +738,7 @@
 				<p>When the abstract operation FromStackFramePosition is called with argument <var>position</var>, the following steps are taken:</p>
 				<emu-alg>
 					<ol>
-						<li>Assert:
+						<li>Assert: !
 							<emu-xref aoid="IsStackFramePosition"><a href="#sec-isstackposition">IsStackFramePosition</a></emu-xref>(<var>position</var>) is
 							<emu-val>true</emu-val>.</li>
 						<li>Let <var>list</var> be a new empty
@@ -783,7 +783,7 @@
 						<ol>
 							<li>Let <var>E</var> be the
 								<emu-val>this</emu-val> value.</li>
-							<li>If
+							<li>If !
 								<emu-xref aoid="Type"><a href="https://tc39.github.io/ecma262/#sec-ecmascript-data-types-and-values">Type</a></emu-xref>(<var>E</var>) is not Object, throw a
 								<emu-val>TypeError</emu-val> exception.</li>
 							<li>If <var>E</var> does not have an [[ErrorData]] internal slot, throw a
