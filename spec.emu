@@ -36,10 +36,10 @@ contributors: Jordan Harband, Mark Miller
 	<p>When the abstract operation _GetStack_ is called with argument _error_, the following steps are performed:</p>
 	<emu-alg>
 		1. Assert: _error_ has an [[ErrorData]] internal slot.
-		1. Let _calls_ be ! GetStackCalls(_error_).
+		1. Let _frames_ be ! GetStackFrames(_error_).
 		1. Let _string_ be ! GetStackString(_error_).
 		1. Let _obj_ be ! ObjectCreate(%ObjectPrototype%).
-		1. Perform ! CreateDataProperty(_obj_, *"calls"*, _calls_).
+		1. Perform ! CreateDataProperty(_obj_, *"frames"*, _frames_).
 		1. Assert: The above CreateDataProperty operation returns *true*.
 		1. Perform ! CreateDataProperty(_obj_, *"string"*, _string_).
 		1. Assert: The above CreateDataProperty operation returns *true*.
@@ -54,9 +54,9 @@ contributors: Jordan Harband, Mark Miller
 	<p>When the abstract operation _GetStackString_ is called with argument _error_, the following steps are performed:</p>
 	<emu-alg>
 		1. Assert: _error_ has an [[ErrorData]] internal slot.
-		1. Let _calls_ be ! GetStackCalls(_error_).
+		1. Let _frames_ be ! GetStackFrames(_error_).
 		1. Let _stackString_ be a String consisting solely of the code unit 0x0020 (SPACE).
-		1. For each Stack Frame _frame_ in _calls_,
+		1. For each Stack Frame _frame_ in _frames_,
 			1. If _stackString_ does not consist solely of the code unit 0x0020 (SPACE),
 				1. Let _stackString_ be the concatenation of _stackString_, the code unit 0x000A (LINE FEED), and the code unit 0x0020 (SPACE).
 			1. Let _stackString_ be the concatenation of _stackString_ and ! GetFrameString(_frame_).
@@ -103,15 +103,15 @@ contributors: Jordan Harband, Mark Miller
 	</emu-alg>
 </emu-clause>
 
-<emu-clause id="sec-getstackcalls" aoid="GetStackCalls">
-	<h1>GetStackCalls( _error_ )</h1>
-	<p>When the abstract operation _GetStackCalls_ is called with argument _error_, the following steps are performed:</p>
+<emu-clause id="sec-getstackframes" aoid="GetStackFrames">
+	<h1>GetStackFrames( _error_ )</h1>
+	<p>When the abstract operation _GetStackFrames is called with argument _error_, the following steps are performed:</p>
 	<emu-alg>
 		1. Assert: _error_ has an [[ErrorData]] internal slot.
-		1. Let _calls_ be a new empty List.
+		1. Let _frames_ be a new empty List.
 		1. Repeat, for each Stack Frame _frame_ in _error_.[[ErrorData]],
-			1. Append ! FromStackFrame(_frame_) to _calls_.
-		1. Let _array_ be ! CreateArrayFromList(_calls_).
+			1. Append ! FromStackFrame(_frame_) to _frames_.
+		1. Let _array_ be ! CreateArrayFromList(_frames_).
 		1. Let _status_ be ! SetIntegrityLevel(_array_, *"frozen"*).
 		1. Assert: _status_ is *true*.
 		1. Return _array_.
