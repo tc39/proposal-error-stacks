@@ -344,7 +344,7 @@
 		</div>
 	</div>
 	<div id="spec-container">
-		<h1 class="version">Stage 0 Draft / December 2, 2016</h1>
+		<h1 class="version">Stage 0 Draft / December 20, 2016</h1>
 		<h1 class="title">Error Stacks</h1>
 
 		<emu-clause id="sec-system">
@@ -638,11 +638,12 @@
 							<emu-val>false</emu-val>.</li>
 						<li>If <var>position</var> does not have a [[Line]] internal slot, return
 							<emu-val>false</emu-val>.</li>
-						<li>If <var>position</var>.[[Line]] is not finite or is not an integer, return
+						<li>If <var>position</var>.[[Line]] is not a positive integer ≤ 2<sup>53</sup>-1, return
 							<emu-val>false</emu-val>.</li>
 						<li>If <var>position</var> has a [[Column]] internal slot,
 							<ol>
-								<li>If <var>position</var>.[[Column]] is not finite or is not an integer, return
+								<li>If <var>position</var>.[[Column]] is not
+									<emu-val>+0</emu-val> or a positive integer ≤ 2<sup>53</sup>-1, return
 									<emu-val>false</emu-val>.</li>
 							</ol>
 						</li>

@@ -157,9 +157,9 @@ contributors: Jordan Harband, Mark Miller
 		<emu-alg>
 			1. If ! Type(_position_) is not Object, return *false*.
 			1. If _position_ does not have a [[Line]] internal slot, return *false*.
-			1. If _position_.[[Line]] is not finite or is not an integer, return *false*.
+			1. If _position_.[[Line]] is not a positive integer &le; 2<sup>53</sup>-1, return *false*.
 			1. If _position_ has a [[Column]] internal slot,
-				1. If _position_.[[Column]] is not finite or is not an integer, return *false*.
+				1. If _position_.[[Column]] is not *+0* or a positive integer &le; 2<sup>53</sup>-1, return *false*.
 			1. Return *true*.
 		</emu-alg>
 	</emu-clause>
