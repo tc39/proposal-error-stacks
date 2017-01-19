@@ -16,7 +16,9 @@ Object.getOwnPropertyDescriptor(new Error(), 'stack');
 Object.getOwnPropertyDescriptor(Error.prototype, 'stack');
 ```
 
-node/Chrome: `stack` is an own property on `Error` instances with a getter/setter: `{ configurable: true, enumerable: false }`
+V8 in Node 7+ and Chrome 54+: `stack` is an own property on `Error` instances which claims to be a value property (`{"value":"(stack here)","writable":true,"enumerable":false,"configurable":true`), but V8's `Error` has exotic behavior for [[GetOwnProperty]]  that acts like a getter the first time (if there's been no set first) by triggering `prepareStackTrace` and setting `stack`, as discussed in [this thread](https://esdiscuss.org/topic/getownpropertydescriptor-side-effects). After that, it behaves like a standard value property.
+
+V8 in Node <= 6 and Chrome <= 53: `stack` is an own property on `Error` instances with a getter/setter: `{ configurable: true, enumerable: false }`
  - The getter returns `undefined` with a non-Error receiver, and returns the `stack` property (whatever its current value may be) otherwise.
  - The setter is a no-op with a non-Error object receiver, and sets the return of the `stack` getter otherwise.
 
