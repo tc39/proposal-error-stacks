@@ -229,14 +229,15 @@ contributors: Jordan Harband, Mark Miller
 		<h1>Additional Properties of the Error.prototype Object</h1>
 
 		<emu-annex id="sec-error.prototype-stack">
-			<h1>get Error.prototype.stack</h1>
+			<h1>get Error.prototype.stack ( )</h1>
 			<p>*Error.prototype.stack* is an accessor property whose set accessor function is *undefined*. Its get accessor function performs the following steps:</p>
 			<emu-alg>
 				1. Let _E_ be the *this* value.
 				1. If ! Type(_E_) is not Object, throw a *TypeError* exception.
-				1. If _E_ does not have an [[ErrorData]] internal slot, throw a *TypeError* exception.
+				1. If _E_ does not have an [[ErrorData]] internal slot, return *undefined*.
 				1. Return ? GetStackString(_error_).
 			</emu-alg>
+			<p>The value of the *"name"* property of this function is *"get stack"*.</p>
 		</emu-annex>
 	</emu-annex>
 </emu-annex>
