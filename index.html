@@ -251,7 +251,7 @@
 			"key": "Placeholder to ensure correct annex lettering"
 		}, {
 			"type": "clause",
-			"id": "sec-error.prototype-stack",
+			"id": "sec-get-error.prototype-stack",
 			"aoid": null,
 			"title": "get Error.prototype.stack ( )",
 			"titleHTML": "get Error.prototype.stack ( )",
@@ -259,6 +259,16 @@
 			"namespace": "<no location>",
 			"location": "",
 			"key": "get Error.prototype.stack ( )"
+		}, {
+			"type": "clause",
+			"id": "sec-set-error.prototype-stack",
+			"aoid": null,
+			"title": "set Error.prototype.stack ( value )",
+			"titleHTML": "set Error.prototype.stack ( <var>value</var> )",
+			"number": "B.1.2",
+			"namespace": "<no location>",
+			"location": "",
+			"key": "set Error.prototype.stack ( value )"
 		}, {
 			"type": "clause",
 			"id": "sec-additional-properties-of-the-error.prototype-object",
@@ -1954,7 +1964,8 @@
 					<ol class="toc">
 						<li><span class="item-toggle">◢</span><a href="#sec-additional-properties-of-the-error.prototype-object" title="Additional Properties of the Error.prototype Object"><span class="secnum">B.1</span> Additional Properties of the Error.prototype Object</a>
 							<ol class="toc">
-								<li><span class="item-toggle-none"></span><a href="#sec-error.prototype-stack" title="get Error.prototype.stack ( )"><span class="secnum">B.1.1</span> get Error.prototype.stack ( )</a></li>
+								<li><span class="item-toggle-none"></span><a href="#sec-get-error.prototype-stack" title="get Error.prototype.stack ( )"><span class="secnum">B.1.1</span> get Error.prototype.stack ( )</a></li>
+								<li><span class="item-toggle-none"></span><a href="#sec-set-error.prototype-stack" title="set Error.prototype.stack ( value )"><span class="secnum">B.1.2</span> set Error.prototype.stack ( <var>value</var> )</a></li>
 							</ol>
 						</li>
 					</ol>
@@ -2397,12 +2408,11 @@
 				<h1><span class="secnum">B.1</span>Additional Properties of the Error.prototype Object<span class="utils"><span class="anchor"><a href="#sec-additional-properties-of-the-error.prototype-object">link</a></span><span class="anchor"><a href="#" class="utils-pin">pin</a></span></span>
 				</h1>
 
-				<emu-annex id="sec-error.prototype-stack">
-					<h1><span class="secnum">B.1.1</span>get Error.prototype.stack ( )<span class="utils"><span class="anchor"><a href="#sec-error.prototype-stack">link</a></span><span class="anchor"><a href="#" class="utils-pin">pin</a></span></span>
+				<emu-annex id="sec-get-error.prototype-stack">
+					<h1><span class="secnum">B.1.1</span>get Error.prototype.stack ( )<span class="utils"><span class="anchor"><a href="#sec-get-error.prototype-stack">link</a></span><span class="anchor"><a href="#" class="utils-pin">pin</a></span></span>
 					</h1>
 					<p>
-						<emu-val>Error.prototype.stack</emu-val> is an accessor property whose set accessor function is
-						<emu-val>undefined</emu-val>. Its get accessor function performs the following steps:</p>
+						<emu-val>Error.prototype.stack</emu-val> is an accessor property whose get accessor function performs the following steps:</p>
 					<emu-alg>
 						<ol>
 							<li>Let <var>E</var> be the
@@ -2420,6 +2430,32 @@
 					<p>The value of the
 						<emu-val>"name"</emu-val> property of this function is
 						<emu-val>"get stack"</emu-val>.</p>
+				</emu-annex>
+
+				<emu-annex id="sec-set-error.prototype-stack">
+					<h1><span class="secnum">B.1.2</span>set Error.prototype.stack ( <var>value</var> )<span class="utils"><span class="anchor"><a href="#sec-set-error.prototype-stack">link</a></span><span class="anchor"><a href="#" class="utils-pin">pin</a></span></span>
+					</h1>
+					<p>Its set accessor function performs the following steps:</p>
+					<emu-alg>
+						<ol>
+							<li>Let <var>E</var> be the
+								<emu-val>this</emu-val> value.</li>
+							<li>If !&nbsp;
+								<emu-xref aoid="Type"><a href="https://tc39.github.io/ecma262/#sec-ecmascript-data-types-and-values">Type</a></emu-xref>(<var>E</var>) is not Object, throw a
+								<emu-val>TypeError</emu-val> exception.</li>
+							<li>Let <var>numberOfArgs</var> be the number of arguments passed to this function call.</li>
+							<li>If <var>numberOfArgs</var> is
+								<emu-val>0</emu-val>, throw a
+								<emu-val>TypeError</emu-val> exception.</li>
+							<li>Return ?&nbsp;
+								<emu-xref aoid="CreateDataPropertyOrThrow"><a href="https://tc39.github.io/ecma262/#sec-createdatapropertyorthrow">CreateDataPropertyOrThrow</a></emu-xref>(<var>E</var>,
+								<emu-val>"stack"</emu-val>, <var>value</var>);
+							</li>
+						</ol>
+					</emu-alg>
+					<p>The value of the
+						<emu-val>"name"</emu-val> property of this function is
+						<emu-val>"set stack"</emu-val>.</p>
 				</emu-annex>
 			</emu-annex>
 		</emu-annex>
