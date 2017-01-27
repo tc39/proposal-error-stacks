@@ -3,7 +3,7 @@ ECMAScript Proposal, specs, and reference implementation for `Error.prototype.st
 
 Spec drafted by [@ljharb](https://github.com/ljharb) along with [@erights](https://github.com/erights).
 
-This proposal is currently [stage 0](https://github.com/tc39/proposals/blob/master/stage-0-proposals.md) of the [process](https://tc39.github.io/process-document/).
+This proposal is currently [stage 1](https://github.com/tc39/proposals/blob/master/README.md) of the [process](https://tc39.github.io/process-document/).
 
 ## Rationale
 
