@@ -33,4 +33,4 @@ Firefox: `stack` is an own property on `Error.prototype`: `{ configurable: true,
 `Error.prototype.stack` is set in stone - this is a defacto reality, and will be implemented in Annex B.
 
 ## Spec
-You can view the spec in [markdown format](spec.md) or rendered as [HTML](https://tc39.github.io/proposal-error-stacks/).
+You can view the spec in [Ecmarkup format](spec.emu) or rendered as [HTML](https://tc39.github.io/proposal-error-stacks/).
