@@ -132,7 +132,7 @@ contributors: Jordan Harband, Mark Miller
 			1. If _frame_ does not have a [[Source]] internal slot, return *false*.
 			1. If _frame_ does not have a [[Span]] internal slot, return *false*.
 			1. If ! Type(_frame_.[[Name]]) is not String, return *false*.
-			1. If ! Type(_frame_.[[Source]]) is not String, and ! IsStackFrame(_source_) is not *true*, return *false*.
+			1. If ! Type(_frame_.[[Source]]) is not String, and ! IsStackFrame(_frame_.[[Source]]) is not *true*, return *false*.
 			1. If ! IsStackFrameSpan(_frame_.[[Span]]) is not *true*, return *false*.
 			1. Return *true*.
 		</emu-alg>
