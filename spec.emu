@@ -10,7 +10,7 @@ contributors: Jordan Harband, Mark Miller
 </pre>
 
 <emu-clause id="sec-system">
-    <h1>System</h1>
+	<h1>System</h1>
 
 	<emu-clause id="sec-system-get-stack">
 		<h1>System.getStack ( _error_ )</h1>
