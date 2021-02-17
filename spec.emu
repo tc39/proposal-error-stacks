@@ -49,6 +49,31 @@ contributors: Jordan Harband, Mark Miller
 	</emu-alg>
 </emu-clause>
 
+<emu-clause id="sec-error-objects">
+	<h1>Error Objects</h1>
+
+	<emu-clause id="sec-properties-of-error-instances">
+		<h1>Properties of Error Instances</h1>
+		<p>Error instances are ordinary objects that inherit properties from the <emu-xref href="#sec-properties-of-the-error-prototype-object">Error prototype object</emu-xref> <del>and have an [[ErrorData]] internal slot whose value is *undefined*. The only specified uses of [[ErrorData]] is to identify Error, AggregateError, and _NativeError_ instances as Error objects within `Object.prototype.toString`</del><ins>(the intrinsic, <emu-xref href="#sec-properties-of-the-error-prototype-object">%Error.prototype%</emu-xref>). Error instances are initially created with the internal slots described in <emu-xref href="#table-internal-slots-of-error-instances"></emu-xref></ins>.</p>
+		<ins class="block">
+			<emu-table id="table-internal-slots-of-error-instances" caption="Internal Slots of Error Instances">
+				<table>
+					<tbody>
+					<tr>
+						<th>Internal Slot</th>
+						<th>Description</th>
+					</tr>
+					<tr>
+						<td>[[ErrorData]]</td>
+						<td>A List of Stack Frames.</td>
+					</tr>
+					</tbody>
+				</table>
+			</emu-table>
+		</ins>
+	</emu-clause>
+</emu-clause>
+
 <emu-clause id="sec-getstackstring" aoid="GetStackString">
 	<h1>GetStackString ( _error_ )</h1>
 	<p>When the abstract operation _GetStackString_ is called with argument _error_, the following steps are performed:</p>
