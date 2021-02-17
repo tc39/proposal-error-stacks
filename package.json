@@ -29,7 +29,7 @@
 	},
 	"homepage": "https://github.com/ljharb/proposal-promise-error-stacks#readme",
 	"dependencies": {
-		"in-publish": "^2.0.0"
+		"in-publish": "^2.0.1"
 	},
 	"devDependencies": {
 		"ecmarkup": "^6.1.0"
