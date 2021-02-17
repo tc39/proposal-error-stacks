@@ -49,24 +49,54 @@ contributors: Jordan Harband, Mark Miller
 			1. Perform ? RequireInternalSlot(_error_, [[ErrorData]]).
 			1. Return ? GetStackString(_error_).
 		</emu-alg>
-
-		<emu-clause id="sec-getstackstring" aoid="GetStackString">
-			<h1>GetStackString ( _error_ )</h1>
-			<p>The abstract operation GetStackString takes argument _error_. It performs the following steps when called:</p>
-			<emu-alg>
-				1. Assert: _error_ is an Object that has an [[ErrorData]] internal slot.
-				1. Let _stackString_ be ? ToString(_error_).
-				1. For each Stack Frame Record _frame_ of _error_.[[ErrorData]], do
-					1. Let _frameString_ be ! GetStackFrameString(_frame_).
-					1. Set _stackString_ to the string-concatenation of _stackString_, the code unit 0x000A (LINE FEED), the code unit 0x0020 (SPACE), and _frameString_.
-				1. Return _stackString_.
-			</emu-alg>
-		</emu-clause>
 	</emu-clause>
 </emu-clause>
 
 <emu-clause id="sec-error-objects">
 	<h1>Error Objects</h1>
+
+	<emu-clause id="sec-properties-of-the-error-prototype-object">
+		<h1>Properties of the Error Prototype Object</h1>
+
+		<emu-clause id="sec-error.prototype.stack">
+			<h1>Error.prototype.stack</h1>
+			<p>`Error.prototype.__proto__` is an accessor property with attributes { [[Enumerable]]: *false*, [[Configurable]]: *true* }. The [[Get]] and [[Set]] attributes are defined as follows:</p>
+
+			<emu-clause id="sec-get-error.prototype.stack" oldids="sec-get-error.prototype-stack">
+				<h1>get Error.prototype.stack</h1>
+				<p>The value of the [[Get]] attribute is a built-in function that requires no arguments. It performs the following steps when called:</p>
+				<emu-alg>
+					1. Let _E_ be the *this* value.
+					1. If Type(_E_) is not Object, throw a *TypeError* exception.
+					1. If _E_ does not have an [[ErrorData]] internal slot, return *undefined*.
+					1. Return ? GetStackString(_error_).
+				</emu-alg>
+
+				<emu-clause id="sec-getstackstring" aoid="GetStackString">
+					<h1>GetStackString ( _error_ )</h1>
+					<p>The abstract operation GetStackString takes argument _error_. It performs the following steps when called:</p>
+					<emu-alg>
+						1. Assert: _error_ is an Object that has an [[ErrorData]] internal slot.
+						1. Let _stackString_ be ? ToString(_error_).
+						1. For each Stack Frame Record _frame_ of _error_.[[ErrorData]], do
+							1. Let _frameString_ be ! GetStackFrameString(_frame_).
+							1. Set _stackString_ to the string-concatenation of _stackString_, the code unit 0x000A (LINE FEED), the code unit 0x0020 (SPACE), and _frameString_.
+						1. Return _stackString_.
+					</emu-alg>
+				</emu-clause>
+			</emu-clause>
+
+			<emu-clause id="sec-set-error.prototype.stack" oldids="sec-set-error.prototype-stack">
+				<h1>set Error.prototype.stack</h1>
+				<p>The value of the [[Set]] attribute is a built-in function that takes argument _value_. It performs the following steps when called:</p>
+				<emu-alg>
+					1. Let _E_ be the *this* value.
+					1. If Type(_E_) is not Object, throw a *TypeError* exception.
+					1. Return ? CreateDataPropertyOrThrow(_E_, *"stack"*, _value_);
+				</emu-alg>
+			</emu-clause>
+		</emu-clause>
+	</emu-clause>
 
 	<emu-clause id="sec-properties-of-error-instances">
 		<h1>Properties of Error Instances</h1>
@@ -256,41 +286,3 @@ contributors: Jordan Harband, Mark Miller
 		</emu-clause>
 	</emu-clause>
 </emu-clause>
-
-<emu-annex id="sec-grammar-summary">
-	<h1>Placeholder to ensure correct annex lettering</h1>
-</emu-annex>
-
-<emu-annex id="sec-additional-built-in-properties">
-	<h1>Additional Built-in Properties</h1>
-	<p>When the ECMAScript host is a web browser the following additional properties of the standard built-in objects are defined.</p>
-
-	<emu-annex id="sec-additional-properties-of-the-error.prototype-object">
-		<h1>Additional Properties of the Error.prototype Object</h1>
-
-		<emu-annex id="sec-get-error.prototype-stack">
-			<h1>get Error.prototype.stack ( )</h1>
-			<p>*Error.prototype.stack* is an accessor property whose get accessor function performs the following steps:</p>
-			<emu-alg>
-				1. Let _E_ be the *this* value.
-				1. If ! Type(_E_) is not Object, throw a *TypeError* exception.
-				1. If _E_ does not have an [[ErrorData]] internal slot, return *undefined*.
-				1. Return ? GetStackString(_error_).
-			</emu-alg>
-			<p>The value of the *"name"* property of this function is *"get stack"*.</p>
-		</emu-annex>
-
-		<emu-annex id="sec-set-error.prototype-stack">
-			<h1>set Error.prototype.stack ( _value_ )</h1>
-			<p>Its set accessor function performs the following steps:</p>
-			<emu-alg>
-				1. Let _E_ be the *this* value.
-				1. If ! Type(_E_) is not Object, throw a *TypeError* exception.
-				1. Let _numberOfArgs_ be the number of arguments passed to this function call.
-				1. If _numberOfArgs_ is *0*, throw a *TypeError* exception.
-				1. Return ? CreateDataPropertyOrThrow(_E_, *"stack"*, _value_);
-			</emu-alg>
-			<p>The value of the *"name"* property of this function is *"set stack"*.</p>
-		</emu-annex>
-	</emu-annex>
-</emu-annex>
