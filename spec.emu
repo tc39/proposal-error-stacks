@@ -22,8 +22,6 @@ contributors: Jordan Harband, Mark Miller
 			1. Let _obj_ be ! ObjectCreate(%ObjectPrototype%).
 			1. Perform ! CreateDataPropertyOrThrow(_obj_, *"frames"*, _frames_).
 			1. Perform ! CreateDataPropertyOrThrow(_obj_, *"string"*, _string_).
-			1. Let _status_ be ! SetIntegrityLevel(_obj_, *"frozen"*).
-			1. Assert: _status_ is *true*.
 			1. Return _obj_.
 		</emu-alg>
 
@@ -34,10 +32,7 @@ contributors: Jordan Harband, Mark Miller
 				1. Assert: _error_ is an Object that has an [[ErrorData]] internal slot.
 				1. Let _frames_ be a new empty List.
 				1. For each Stack Frame Record _frame_ of _error_.[[ErrorData]], append ! FromStackFrame(_frame_) to _frames_.
-				1. Let _array_ be ! CreateArrayFromList(_frames_).
-				1. Let _status_ be ! SetIntegrityLevel(_array_, *"frozen"*).
-				1. Assert: _status_ is *true*.
-				1. Return _array_.
+				1. Return ! CreateArrayFromList(_frames_).
 			</emu-alg>
 		</emu-clause>
 	</emu-clause>
@@ -131,8 +126,6 @@ contributors: Jordan Harband, Mark Miller
 				1. If _frame_.[[Span]] is not ~empty~, then
 					1. Let _spanObj_ be ! FromStackFrameSpan(_frame_.[[Span]]).
 					1. Perform ! CreateDataPropertyOrThrow(_obj_, *"span"*, _spanObj_).
-				1. Let _status_ be ! SetIntegrityLevel(_obj_, *"frozen"*).
-				1. Assert: _status_ is *true*.
 				1. Return _obj_.
 			</emu-alg>
 		</emu-clause>
@@ -185,10 +178,7 @@ contributors: Jordan Harband, Mark Miller
 					1. Let _list_ be a new empty List.
 					1. Append ! FromStackFramePosition(_span_.[[StartPosition]]) to _list_.
 					1. If _span_.[[EndPosition]] is not empty, append ! FromStackFramePosition(_span_.[[EndPosition]]) to _list_.
-					1. Let _array_ be ! CreateArrayFromList(_list_).
-					1. Let _status_ be ! SetIntegrityLevel(_array_, *"frozen"*).
-					1. Assert: _status_ is *true*.
-					1. Return _array_.
+					1. Return ! CreateArrayFromList(_list_).
 				</emu-alg>
 			</emu-clause>
 
@@ -234,10 +224,7 @@ contributors: Jordan Harband, Mark Miller
 						1. Let _list_ be a new empty List.
 						1. Append _position_.[[Line]] to _list_.
 						1. If _position_.[[Column]] is not ~empty~, append _position_.[[Column]] to _list_.
-						1. Let _array_ be ! CreateArrayFromList(_list_).
-						1. Let _status_ be ! SetIntegrityLevel(_array_, *"frozen"*).
-						1. Assert: _status_ is *true*.
-						1. Return _array_.
+						1. Return ! CreateArrayFromList(_list_).
 					</emu-alg>
 				</emu-clause>
 
