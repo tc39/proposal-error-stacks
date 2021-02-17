@@ -3,7 +3,7 @@
 	"version": "0.0.0",
 	"description": "ECMAScript spec proposal for Error Stacks",
 	"scripts": {
-		"build": "ecmarkup spec.emu --js=spec.js --css=spec.css | js-beautify -f - --type=html -t > index.html",
+		"build": "ecmarkup spec.emu index.html --js-out=spec.js --css-out=spec.css",
 		"prepublish": "not-in-publish && npm run build || (echo >&2 'no publishing' && exit 255)"
 	},
 	"repository": {
@@ -32,7 +32,6 @@
 		"in-publish": "^2.0.0"
 	},
 	"devDependencies": {
-		"ecmarkup": "^3.12.0",
-		"js-beautify": "^1.7.4"
+		"ecmarkup": "^6.1.0"
 	}
 }
