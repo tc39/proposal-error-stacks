@@ -74,9 +74,9 @@ contributors: Jordan Harband, Mark Miller
 		1. Let _source_ be _frame_.[[Source]].
 		1. If Type(_source_) is not String,
 			1. Assert: ! IsStackFrame(_source_) is *true*.
-			1. Let _source_ be the concatenation of *"eval*" and ! GetFrameString(_source_).
+			1. Let _source_ be the concatenation of *"eval"* and ! GetFrameString(_source_).
 		1. Assert: ! Type(_source_) is String.
-		1. Let _spanString_ be ! GetStackFrameSpanString(_source_.[[Span]]).
+		1. Let _spanString_ be ! GetStackFrameSpanString(_frame_.[[Span]]).
 		1. return a String formed by concatenating the code unit 0x0020 (SPACE), *"at"*, the code unit 0x0020 (SPACE), _frame_.[[Name]], the code unit 0x0020 (SPACE), *"("*, _source_, _spanString_, and *")"*.
 	</emu-alg>
 </emu-clause>
