@@ -82,7 +82,7 @@ contributors: Jordan Harband, Mark Miller
 </emu-clause>
 
 <emu-clause id="sec-getstackframespanstring" aoid="GetStackFrameSpanString">
-	<h1>GetStackFrameSpanString( _span_ )</h1>
+	<h1>GetStackFrameSpanString ( _span_ )</h1>
 	<p>When the abstract operation _GetStackFrameSpanString_ is called with argument _span_, the following steps are performed:</p>
 	<emu-alg>
 		1. Assert: ! IsStackFrameSpan(_span_) is *true*.
@@ -94,7 +94,7 @@ contributors: Jordan Harband, Mark Miller
 </emu-clause>
 
 <emu-clause id="sec-getstackframepositionstring" aoid="GetStackFramePositionString">
-	<h1>GetStackFramePositionString( _position_ )</h1>
+	<h1>GetStackFramePositionString ( _position_ )</h1>
 	<p>When the abstract operation _GetStackFramePositionString_ is called with argument _position_, the following steps are performed:</p>
 	<emu-alg>
 		1. Assert: ! IsStackFramePosition(_position_) is *true*.
@@ -106,7 +106,7 @@ contributors: Jordan Harband, Mark Miller
 </emu-clause>
 
 <emu-clause id="sec-getstackframes" aoid="GetStackFrames">
-	<h1>GetStackFrames( _error_ )</h1>
+	<h1>GetStackFrames ( _error_ )</h1>
 	<p>When the abstract operation _GetStackFrames_ is called with argument _error_, the following steps are performed:</p>
 	<emu-alg>
 		1. Assert: _error_ has an [[ErrorData]] internal slot.
