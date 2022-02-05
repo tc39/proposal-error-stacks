@@ -3,7 +3,7 @@
 	"version": "0.0.0",
 	"description": "ECMAScript spec proposal for Error Stacks",
 	"scripts": {
-		"build": "ecmarkup spec.emu index.html --js-out=spec.js --css-out=spec.css",
+		"build": "ecmarkup spec.emu index.html",
 		"prepublish": "not-in-publish && npm run build || (echo >&2 'no publishing' && exit 255)"
 	},
 	"repository": {
@@ -32,6 +32,6 @@
 		"in-publish": "^2.0.1"
 	},
 	"devDependencies": {
-		"ecmarkup": "^6.1.0"
+		"ecmarkup": "^9.8.1"
 	}
 }
