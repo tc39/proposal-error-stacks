@@ -36,7 +36,7 @@ contributors: Jordan Harband, Mark Miller
 		1. Assert: _error_ has an [[ErrorData]] internal slot.
 		1. Let _frames_ be ! GetStackFrames(_error_).
 		1. Let _string_ be ? GetStackString(_error_).
-		1. Let _obj_ be ! ObjectCreate(%ObjectPrototype%).
+		1. Let _obj_ be OrdinaryObjectCreate(%ObjectPrototype%).
 		1. Perform ! CreateDataProperty(_obj_, *"frames"*, _frames_).
 		1. Assert: The above CreateDataProperty operation returns *true*.
 		1. Perform ! CreateDataProperty(_obj_, *"string"*, _string_).
@@ -55,12 +55,11 @@ contributors: Jordan Harband, Mark Miller
 		1. Let _errorString_ be ? ToString(_error_).
 		1. Let _frames_ be ! GetStackFrames(_error_).
 		1. Let _frameString_ be a String consisting solely of the code unit 0x0020 (SPACE).
-		1. For each Stack Frame _frame_ in _frames_,
-			1. If _frameString_ does not consist solely of the code unit 0x0020 (SPACE),
-				1. Let _frameString_ be the concatenation of _frameString_, the code unit 0x000A (LINE FEED), and the code unit 0x0020 (SPACE).
-			1. Let _frameString_ be the concatenation of _frameString_ and ! GetFrameString(_frame_).
-		1. Let _stackString_ be the concatenation of _errorString_, the code unit 0x000A (LINE FEED), and _frameString_.
-		1. Return _stackString_.
+		1. For each Stack Frame _frame_ in _frames_, do
+			1. If _frameString_ does not consist solely of the code unit 0x0020 (SPACE), then
+				1. Set _frameString_ to the string-concatenation of _frameString_, the code unit 0x000A (LINE FEED), and the code unit 0x0020 (SPACE).
+			1. Set _frameString_ to the string-concatenation of _frameString_ and ! GetFrameString(_frame_).
+		1. Return the string-concatenation of _errorString_, the code unit 0x000A (LINE FEED), and _frameString_.
 	</emu-alg>
 </emu-clause>
 
@@ -70,12 +69,12 @@ contributors: Jordan Harband, Mark Miller
 	<emu-alg>
 		1. Assert: ! IsStackFrame(_frame_) is *true*.
 		1. Let _source_ be _frame_.[[Source]].
-		1. If Type(_source_) is not String,
+		1. If _source_ is not a String, then
 			1. Assert: ! IsStackFrame(_source_) is *true*.
-			1. Let _source_ be the concatenation of *"eval"* and ! GetFrameString(_source_).
-		1. Assert: ! Type(_source_) is String.
+			1. Set _source_ to the string-concatenation of *"eval"* and ! GetFrameString(_source_).
+		1. Assert: _source_ is a String.
 		1. Let _spanString_ be ! GetStackFrameSpanString(_frame_.[[Span]]).
-		1. return a String formed by concatenating the code unit 0x0020 (SPACE), *"at"*, the code unit 0x0020 (SPACE), _frame_.[[Name]], the code unit 0x0020 (SPACE), *"("*, _source_, _spanString_, and *")"*.
+		1. Return the string-concatenation of the code unit 0x0020 (SPACE), *"at"*, the code unit 0x0020 (SPACE), _frame_.[[Name]], the code unit 0x0020 (SPACE), and *"("*, _source_, _spanString_, and *")"*.
 	</emu-alg>
 </emu-clause>
 
@@ -85,8 +84,8 @@ contributors: Jordan Harband, Mark Miller
 	<emu-alg>
 		1. Assert: ! IsStackFrameSpan(_span_) is *true*.
 		1. Let _spanString_ be ! GetStackFramePositionString(_span_.[[StartPosition]]).
-		1. If _span_ has an [[EndPosition]] internal slot,
-			1. Let _spanString_ be the concatenation of _spanString_, *"::"*, and ! GetStackFramePositionString(_span_.[[EndPosition]]).
+		1. If _span_ has an [[EndPosition]] internal slot, then
+			1. Set _spanString_ to the string-concatenation of _spanString_, *"::"*, and ! GetStackFramePositionString(_span_.[[EndPosition]]).
 		1. Return _spanString_.
 	</emu-alg>
 </emu-clause>
@@ -97,8 +96,8 @@ contributors: Jordan Harband, Mark Miller
 	<emu-alg>
 		1. Assert: ! IsStackFramePosition(_position_) is *true*.
 		1. Let _positionString_ be ! ToString(_position_.[[Line]]).
-		1. If _position_ has a [[Column]] internal slot,
-			1. Let _positionString_ be the concatenation of _positionString_, *":"*, and ! ToString(_position_.[[Column]]).
+		1. If _position_ has a [[Column]] internal slot, then
+			1. Set _positionString_ to the string-concatenation of _positionString_, *":"*, and ! ToString(_position_.[[Column]]).
 		1. Return _positionString_.
 	</emu-alg>
 </emu-clause>
@@ -109,9 +108,9 @@ contributors: Jordan Harband, Mark Miller
 	<emu-alg>
 		1. Assert: _error_ has an [[ErrorData]] internal slot.
 		1. Let _frames_ be a new empty List.
-		1. Repeat, for each Stack Frame _frame_ in _error_.[[ErrorData]],
+		1. For each Stack Frame _frame_ in _error_.[[ErrorData]], do
 			1. Append ! FromStackFrame(_frame_) to _frames_.
-		1. Let _array_ be ! CreateArrayFromList(_frames_).
+		1. Let _array_ be CreateArrayFromList(_frames_).
 		1. Let _status_ be ! SetIntegrityLevel(_array_, *"frozen"*).
 		1. Assert: _status_ is *true*.
 		1. Return _array_.
@@ -125,12 +124,12 @@ contributors: Jordan Harband, Mark Miller
 		<h1>IsStackFrame ( _frame_ )</h1>
 		<p>When the abstract operation IsStackFrame is called with Stack Frame _frame_, the following steps are performed:</p>
 		<emu-alg>
-			1. If ! Type(_frame_) is not Object, return *false*.
+			1. If Type(_frame_) is not Object, return *false*.
 			1. If _frame_ does not have a [[Name]] internal slot, return *false*.
 			1. If _frame_ does not have a [[Source]] internal slot, return *false*.
 			1. If _frame_ does not have a [[Span]] internal slot, return *false*.
-			1. If ! Type(_frame_.[[Name]]) is not String, return *false*.
-			1. If ! Type(_frame_.[[Source]]) is not String, and ! IsStackFrame(_frame_.[[Source]]) is not *true*, return *false*.
+			1. If _frame_.[[Name]] is not a String, return *false*.
+			1. If _frame_.[[Source]] is not a String, and ! IsStackFrame(_frame_.[[Source]]) is not *true*, return *false*.
 			1. If ! IsStackFrameSpan(_frame_.[[Span]]) is not *true*, return *false*.
 			1. Return *true*.
 		</emu-alg>
@@ -140,10 +139,10 @@ contributors: Jordan Harband, Mark Miller
 		<h1>IsStackFrameSpan ( _span_ )</h1>
 		<p>When the abstract operation IsStackFrameSpan is called with argument _span_, the following steps are performed:</p>
 		<emu-alg>
-			1. If ! Type(_span_) is not Object, return *false*.
+			1. If Type(_span_) is not Object, return *false*.
 			1. If _span_ does not have a [[StartPosition]] internal slot, return *false*.
 			1. If ! IsStackFramePosition(_span_.[[StartPosition]]) is not *true*, return *false*.
-			1. If _span_ has an [[EndPosition]] internal slot,
+			1. If _span_ has an [[EndPosition]] internal slot, then
 				1. If ! IsStackFramePosition(_span_.[[EndPosition]]) is not *true*, return *false*.
 			1. Return *true*.
 		</emu-alg>
@@ -153,11 +152,11 @@ contributors: Jordan Harband, Mark Miller
 		<h1>IsStackFramePosition ( _position_ )</h1>
 		<p>When the abstract operation IsStackFramePosition is called with argument _position_, the following steps are performed:</p>
 		<emu-alg>
-			1. If ! Type(_position_) is not Object, return *false*.
+			1. If Type(_position_) is not Object, return *false*.
 			1. If _position_ does not have a [[Line]] internal slot, return *false*.
 			1. If _position_.[[Line]] is not a positive integer &le; 2<sup>53</sup>-1, return *false*.
-			1. If _position_ has a [[Column]] internal slot,
-				1. If _position_.[[Column]] is not *+0* or a positive integer &le; 2<sup>53</sup>-1, return *false*.
+			1. If _position_ has a [[Column]] internal slot, then
+				1. If _position_.[[Column]] is not 𝔽(0) or a positive integer &le; 2<sup>53</sup>-1, return *false*.
 			1. Return *true*.
 		</emu-alg>
 	</emu-clause>
@@ -167,11 +166,11 @@ contributors: Jordan Harband, Mark Miller
 		<p>When the abstract operation FromStackFrame is called with Stack Frame _frame_, the following steps are taken:</p>
 		<emu-alg>
 			1. Assert: ! IsStackFrame(_frame_) is *true*.
-			1. Let _obj_ be ! ObjectCreate(%ObjectPrototype%).
+			1. Let _obj_ be OrdinaryObjectCreate(%ObjectPrototype%).
 			1. Assert: _obj_ is an extensible ordinary object with no own properties.
 			1. Perform ! CreateDataProperty(_obj_, *"name"*, _frame_.[[Name]]).
 			1. Let _source_ be _frame_.[[Source]].
-			1. If ! Type(_source_) is String,
+			1. If _source_ is a String, then
 				1. Perform ! CreateDataProperty(_obj_, *"source"*, _source_).
 			1. Else,
 				1. Assert: ! IsStackFrame(_source_) is *true*.
@@ -192,7 +191,7 @@ contributors: Jordan Harband, Mark Miller
 			1. Let _list_ be a new empty List.
 			1. Append ! FromStackFramePosition(_span_.[[StartPosition]]) to _list_.
 			1. If _span_ has an [[EndPosition]] internal slot, append ! FromStackFramePosition(_span_.[[EndPosition]]) to _list_.
-			1. Let _array_ be ! CreateArrayFromList(_list_).
+			1. Let _array_ be CreateArrayFromList(_list_).
 			1. Let _status_ be ! SetIntegrityLevel(_array_, *"frozen"*).
 			1. Assert: _status_ is *true*.
 			1. Return _array_.
@@ -207,7 +206,7 @@ contributors: Jordan Harband, Mark Miller
 			1. Let _list_ be a new empty List.
 			1. Append _position_.[[Line]] to _list_.
 			1. If _position_ has a [[Column]] internal slot, append _position_.[[Column]] to _list_.
-			1. Let _array_ be ! CreateArrayFromList(_list_).
+			1. Let _array_ be CreateArrayFromList(_list_).
 			1. Let _status_ be ! SetIntegrityLevel(_array_, *"frozen"*).
 			1. Assert: _status_ is *true*.
 			1. Return _array_.
@@ -231,7 +230,7 @@ contributors: Jordan Harband, Mark Miller
 			<p>*Error.prototype.stack* is an accessor property whose get accessor function performs the following steps:</p>
 			<emu-alg>
 				1. Let _E_ be the *this* value.
-				1. If ! Type(_E_) is not Object, throw a *TypeError* exception.
+				1. If Type(_E_) is not Object, throw a *TypeError* exception.
 				1. If _E_ does not have an [[ErrorData]] internal slot, return *undefined*.
 				1. Return ? GetStackString(_error_).
 			</emu-alg>
@@ -243,10 +242,10 @@ contributors: Jordan Harband, Mark Miller
 			<p>Its set accessor function performs the following steps:</p>
 			<emu-alg>
 				1. Let _E_ be the *this* value.
-				1. If ! Type(_E_) is not Object, throw a *TypeError* exception.
+				1. If Type(_E_) is not Object, throw a *TypeError* exception.
 				1. Let _numberOfArgs_ be the number of arguments passed to this function call.
-				1. If _numberOfArgs_ is *0*, throw a *TypeError* exception.
-				1. Return ? CreateDataPropertyOrThrow(_E_, *"stack"*, _value_);
+				1. If _numberOfArgs_ is 0, throw a *TypeError* exception.
+				1. Return ? CreateDataPropertyOrThrow(_E_, *"stack"*, _value_).
 			</emu-alg>
 			<p>The value of the *"name"* property of this function is *"set stack"*.</p>
 		</emu-annex>

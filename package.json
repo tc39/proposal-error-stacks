@@ -2,9 +2,11 @@
 	"name": "ecma-proposal-error-stacks",
 	"version": "0.0.0",
 	"description": "ECMAScript spec proposal for Error Stacks",
+	"private": true,
 	"scripts": {
-		"build": "ecmarkup spec.emu index.html",
-		"prepublish": "not-in-publish && npm run build || (echo >&2 'no publishing' && exit 255)"
+		"start": "npm run build-loose -- --watch",
+		"build": "npm run build-loose -- --strict",
+		"build-loose": "ecmarkup --load-biblio @tc39/ecma262-biblio --verbose spec.emu index.html --lint-spec"
 	},
 	"repository": {
 		"type": "git",
@@ -32,6 +34,7 @@
 		"in-publish": "^2.0.1"
 	},
 	"devDependencies": {
-		"ecmarkup": "^9.8.1"
+		"@tc39/ecma262-biblio": "^2.1.2638",
+		"ecmarkup": "^18.0.0"
 	}
 }
