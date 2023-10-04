@@ -52,7 +52,7 @@ contributors: Jordan Harband, Mark Miller
 	<p>When the abstract operation _GetStackString_ is called with argument _error_, the following steps are performed:</p>
 	<emu-alg>
 		1. Assert: _error_ has an [[ErrorData]] internal slot.
-		1. Let _errorString_ be ? ToString(_error_).
+		1. Let _errorString_ be ? Call(%Error.prototype.toString%, _error_).
 		1. Let _frames_ be ! GetStackFrames(_error_).
 		1. Let _frameString_ be a String consisting solely of the code unit 0x0020 (SPACE).
 		1. For each Stack Frame _frame_ in _frames_, do
