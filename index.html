@@ -80,7 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (e.code === 'Escape') {
         sdoBox.deactivate();
       }
-    })
+    }),
   );
 });
 
@@ -97,11 +97,11 @@ function Search(menu) {
 
   this.$searchBox.addEventListener(
     'keydown',
-    debounce(this.searchBoxKeydown.bind(this), { stopPropagation: true })
+    debounce(this.searchBoxKeydown.bind(this), { stopPropagation: true }),
   );
   this.$searchBox.addEventListener(
     'keyup',
-    debounce(this.searchBoxKeyup.bind(this), { stopPropagation: true })
+    debounce(this.searchBoxKeyup.bind(this), { stopPropagation: true }),
   );
 
   // Perform an initial search if the box is not empty.
@@ -301,7 +301,6 @@ Search.prototype.displayResults = function (results) {
       }
 
       if (text) {
-        // prettier-ignore
         html += `<li class=menu-search-result-${cssClass}><a href="${makeLinkToId(id)}">${text}</a></li>`;
       }
     });
@@ -353,6 +352,14 @@ function Menu() {
   this._pinnedIds = {};
   this.loadPinEntries();
 
+  // unpin all button
+  document
+    .querySelector('#menu-pins .unpin-all')
+    .addEventListener('click', this.unpinAll.bind(this));
+
+  // individual unpinning buttons
+  this.$pinList.addEventListener('click', this.pinListClick.bind(this));
+
   // toggle menu
   this.$toggle.addEventListener('click', this.toggle.bind(this));
 
@@ -402,8 +409,8 @@ Menu.prototype.documentKeydown = function (e) {
   e.stopPropagation();
   if (e.keyCode === 80) {
     this.togglePinEntry();
-  } else if (e.keyCode > 48 && e.keyCode < 58) {
-    this.selectPin(e.keyCode - 49);
+  } else if (e.keyCode >= 48 && e.keyCode < 58) {
+    this.selectPin((e.keyCode - 9) % 10);
   }
 };
 
@@ -475,7 +482,7 @@ function findActiveClause(root, path) {
     let marginTop = Math.max(
       0,
       parseInt(clauseStyles['margin-top']),
-      parseInt(getComputedStyle($header)['margin-top'])
+      parseInt(getComputedStyle($header)['margin-top']),
     );
     let marginBottom = Math.max(0, parseInt(clauseStyles['margin-bottom']));
     let crossesMidpoint =
@@ -565,6 +572,7 @@ Menu.prototype.addPinEntry = function (id) {
     return;
   }
 
+  let text;
   if (entry.type === 'clause') {
     let prefix;
     if (entry.number) {
@@ -572,11 +580,13 @@ Menu.prototype.addPinEntry = function (id) {
     } else {
       prefix = '';
     }
-    // prettier-ignore
-    this.$pinList.innerHTML += `<li><a href="${makeLinkToId(entry.id)}">${prefix}${entry.titleHTML}</a></li>`;
+    text = `${prefix}${entry.titleHTML}`;
   } else {
-    this.$pinList.innerHTML += `<li><a href="${makeLinkToId(entry.id)}">${getKey(entry)}</a></li>`;
+    text = getKey(entry);
   }
+
+  let link = `<a href="${makeLinkToId(entry.id)}">${text}</a>`;
+  this.$pinList.innerHTML += `<li data-section-id="${id}">${link}<button class="unpin">\u{2716}</button></li>`;
 
   if (Object.keys(this._pinnedIds).length === 0) {
     this.showPins();
@@ -586,7 +596,7 @@ Menu.prototype.addPinEntry = function (id) {
 };
 
 Menu.prototype.removePinEntry = function (id) {
-  let item = this.$pinList.querySelector(`a[href="${makeLinkToId(id)}"]`).parentNode;
+  let item = this.$pinList.querySelector(`li[data-section-id="${id}"]`);
   this.$pinList.removeChild(item);
   delete this._pinnedIds[id];
   if (Object.keys(this._pinnedIds).length === 0) {
@@ -594,6 +604,21 @@ Menu.prototype.removePinEntry = function (id) {
   }
 
   this.persistPinEntries();
+};
+
+Menu.prototype.unpinAll = function () {
+  for (let id of Object.keys(this._pinnedIds)) {
+    this.removePinEntry(id);
+  }
+};
+
+Menu.prototype.pinListClick = function (event) {
+  if (event?.target?.classList.contains('unpin')) {
+    let id = event.target.parentNode.dataset.sectionId;
+    if (id) {
+      this.removePinEntry(id);
+    }
+  }
 };
 
 Menu.prototype.persistPinEntries = function () {
@@ -901,7 +926,6 @@ let referencePane = {
       e.parentNode.replaceChild(document.createTextNode(e.textContent), e);
     });
 
-    // prettier-ignore
     this.$headerText.innerHTML = `Syntax-Directed Operations for<br><a href="${makeLinkToId(alternativeId)}" class="menu-pane-header-production"><emu-nt>${parentName}</emu-nt> ${colons.outerHTML} </a>`;
     this.$headerText.querySelector('a').append(rhs);
     this.showSDOsBody(sdos, alternativeId);
@@ -1174,7 +1198,7 @@ function init() {
     'mouseover',
     debounce(e => {
       Toolbox.activateIfMouseOver(e);
-    })
+    }),
   );
   document.addEventListener(
     'keydown',
@@ -1185,7 +1209,7 @@ function init() {
         }
         document.getElementById('shortcuts-help').classList.remove('active');
       }
-    })
+    }),
   );
 }
 
@@ -1340,7 +1364,7 @@ window.addEventListener('beforeunload', () => {
 // https://w3c.github.io/csswg-drafts/css-counter-styles/
 
 const lowerLetters = Array.from({ length: 26 }, (_, i) =>
-  String.fromCharCode('a'.charCodeAt(0) + i)
+  String.fromCharCode('a'.charCodeAt(0) + i),
 );
 // Implement the lower-alpha 'alphabetic' algorithm,
 // adjusting for indexing from 0 rather than 1.
@@ -1411,7 +1435,7 @@ const counterByDepth = [];
 function addStepNumberText(
   ol,
   depth = 0,
-  special = [...ol.classList].some(c => c.startsWith('nested-'))
+  special = [...ol.classList].some(c => c.startsWith('nested-')),
 ) {
   let counter = !special && counterByDepth[depth];
   if (!counter) {
@@ -1630,7 +1654,9 @@ body {
   word-wrap: break-word;
   font-size: 18px;
   line-height: 1.5;
-  font-family: IBM Plex Serif, serif;
+  font-family:
+    IBM Plex Serif,
+    serif;
   font-variant-numeric: slashed-zero;
   padding: 0;
   margin: 0;
@@ -1639,6 +1665,8 @@ body {
 
 #spec-container {
   padding: 0 20px;
+  max-width: 80rem;
+  margin: 0 auto;
   flex-grow: 1;
   flex-basis: 66%;
   box-sizing: border-box;
@@ -1684,7 +1712,9 @@ span.e-user-code::before {
   line-height: normal;
   vertical-align: middle;
   text-transform: uppercase;
-  font-family: IBM Plex Sans, sans-serif;
+  font-family:
+    IBM Plex Sans,
+    sans-serif;
   font-weight: 900;
   font-size: x-small;
 }
@@ -1707,7 +1737,10 @@ span.e-user-code::before {
 
 code {
   font-weight: bold;
-  font-family: Comic Code, IBM Plex Mono, monospace;
+  font-family:
+    Comic Code,
+    IBM Plex Mono,
+    monospace;
   white-space: pre;
 }
 
@@ -1772,7 +1805,9 @@ var.referenced6 {
 }
 
 emu-const {
-  font-family: IBM Plex Sans, sans-serif;
+  font-family:
+    IBM Plex Sans,
+    sans-serif;
   font-variant: small-caps;
   text-transform: uppercase;
 }
@@ -1841,6 +1876,7 @@ emu-note {
   border-left: 5px solid #52e052;
   background: #e9fbe9;
   padding: 10px 10px 10px 0;
+  overflow-x: auto;
 }
 
 emu-note > span.note {
@@ -1971,7 +2007,9 @@ emu-rhs emu-nt {
 
 emu-t {
   display: inline-block;
-  font-family: IBM Plex Mono, monospace;
+  font-family:
+    IBM Plex Mono,
+    monospace;
   font-weight: bold;
   white-space: nowrap;
   text-indent: 0;
@@ -2006,7 +2044,9 @@ emu-mods {
 emu-params,
 emu-opt {
   margin-right: 1ex;
-  font-family: IBM Plex Mono, monospace;
+  font-family:
+    IBM Plex Mono,
+    monospace;
 }
 
 emu-params,
@@ -2020,7 +2060,9 @@ emu-opt {
 
 emu-gprose {
   font-size: 0.9em;
-  font-family: IBM Plex Sans, sans-serif;
+  font-family:
+    IBM Plex Sans,
+    sans-serif;
 }
 
 emu-production emu-gprose {
@@ -2244,7 +2286,8 @@ emu-annex emu-annex emu-annex emu-annex emu-annex emu-annex {
 /* Figures and tables */
 figure {
   display: block;
-  margin: 1em 0 3em 0;
+  overflow-x: auto;
+  margin: 1.5em 0;
 }
 figure object {
   display: block;
@@ -2307,7 +2350,7 @@ table.lightweight-table th {
     background-color: rgba(249, 241, 172, 1);
   }
   100% {
-    background-color: rgba(249, 241, 172, 0)
+    background-color: rgba(249, 241, 172, 0);
   }
 }
 #spec-container :target:not(emu-annex, emu-clause, emu-intro, emu-note, body) {
@@ -2425,26 +2468,68 @@ tr.del > td {
   display: block;
 }
 
+#menu-pins .unpin-all {
+  border: none;
+  background: #ccc;
+  border-radius: 4px;
+  height: 18px;
+  font-size: 12px;
+  margin: 0 5px 0 10px;
+  font-family: IBM Plex Sans;
+}
+#menu-pins .unpin-all:hover {
+  background: #ddd;
+}
+
 #menu-pins-list {
   margin: 0;
   padding: 0;
   counter-reset: pins-counter;
 }
 
+#menu-pins-list > li {
+  display: flex;
+  align-items: stretch;
+  gap: 4px;
+  margin: 3px 1px;
+  border-radius: 4px;
+}
+
+#menu-pins-list > li > a {
+  flex-grow: 1;
+  align-self: center;
+}
+
+#menu-pins-list > li:before,
+#menu-pins-list > li > .unpin {
+  flex-shrink: 0;
+  flex-grow: 0;
+  text-align: center;
+  padding: 1px 3px;
+  border-radius: 4px;
+  background: none;
+  border: none;
+}
+#menu-pins-list > li:before,
+#menu-pins-list > li > .unpin:hover {
+  background: #ccc;
+}
+
+#menu-pins-list > li > .unpin,
+#menu-pins .unpin-all {
+  cursor: pointer;
+}
+#menu-pins-list > li > .unpin:hover,
+#menu-pins .unpin-all:hover {
+  color: #bb1212;
+}
+
 #menu-pins-list > li:before {
   content: counter(pins-counter);
   counter-increment: pins-counter;
-  display: inline-block;
-  width: 25px;
-  text-align: center;
-  border: 1px solid #bbb;
-  padding: 2px;
-  margin: 4px;
-  box-sizing: border-box;
-  line-height: 1em;
-  background-color: #ccc;
-  border-radius: 4px;
+  font-size: 16px;
 }
+
 #menu-toc > ol {
   padding: 0;
   flex-grow: 1;
@@ -2541,7 +2626,6 @@ tr.del > td {
   flex-grow: 0;
   flex-shrink: 0;
   font-size: 80%;
-  cursor: row-resize;
   user-select: none;
 }
 
@@ -2816,12 +2900,16 @@ li.menu-search-result-term:before {
   flex-direction: column;
 }
 
+#references-pane > .menu-pane-header {
+  cursor: row-resize;
+}
+
 #references-pane-container.active {
   display: flex;
 }
 
 #references-pane-close:after {
-  content: '✖';
+  content: '\2716';
   float: right;
   cursor: pointer;
 }
@@ -2904,10 +2992,12 @@ li.menu-search-result-term:before {
   <li><span>Toggle "can call user code" annotations</span><code>u</code></li>
 
   <li><span>Jump to search box</span><code>/</code></li>
-</ul></div><div id="menu-toggle"><svg xmlns="http://www.w3.org/2000/svg" style="width:100%; height:100%; stroke:currentColor" viewBox="0 0 120 120">
+  <li><span>Toggle pinning of the current clause</span><code>p</code></li>
+  <li><span>Jump to <i>n</i>th pin</span><code>1-9</code></li>
+</ul></div><div id="menu-toggle"><svg xmlns="http://www.w3.org/2000/svg" style="width:100%; height:100%; stroke:currentColor" viewBox="0 0 120 120" width="54" height="54">
       <title>Menu</title>
       <path stroke-width="10" stroke-linecap="round" d="M30,60 h60  M30,30 m0,5 h60  M30,90 m0,-5 h60"></path>
-    </svg></div><div id="menu-spacer" class="menu-spacer"></div><div id="menu"><div id="menu-search"><input type="text" id="menu-search-box" placeholder="Search..."><div id="menu-search-results" class="inactive"></div></div><div id="menu-pins"><div class="menu-pane-header">Pins</div><ul id="menu-pins-list"></ul></div><div class="menu-pane-header">Table of Contents</div><div id="menu-toc"><ol class="toc"><li><span class="item-toggle">+</span><a href="#sec-system" title="System"><span class="secnum">1</span> System</a><ol class="toc"><li><span class="item-toggle-none"></span><a href="#sec-system-get-stack" title="System.getStack ( error )"><span class="secnum">1.1</span> System.getStack ( <var>error</var> )</a></li><li><span class="item-toggle-none"></span><a href="#sec-system-get-stack-string" title="System.getStackString ( error )"><span class="secnum">1.2</span> System.getStackString ( <var>error</var> )</a></li></ol></li><li><span class="item-toggle-none"></span><a href="#sec-getstack" title="GetStack ( error )"><span class="secnum">2</span> GetStack ( <var>error</var> )</a></li><li><span class="item-toggle-none"></span><a href="#sec-getstackstring" title="GetStackString ( error )"><span class="secnum">3</span> GetStackString ( <var>error</var> )</a></li><li><span class="item-toggle-none"></span><a href="#sec-getframestring" title="GetFrameString ( frame )"><span class="secnum">4</span> GetFrameString ( <var>frame</var> )</a></li><li><span class="item-toggle-none"></span><a href="#sec-getstackframespanstring" title="GetStackFrameSpanString ( span )"><span class="secnum">5</span> GetStackFrameSpanString ( <var>span</var> )</a></li><li><span class="item-toggle-none"></span><a href="#sec-getstackframepositionstring" title="GetStackFramePositionString ( position )"><span class="secnum">6</span> GetStackFramePositionString ( <var>position</var> )</a></li><li><span class="item-toggle-none"></span><a href="#sec-getstackframes" title="GetStackFrames ( error )"><span class="secnum">7</span> GetStackFrames ( <var>error</var> )</a></li><li><span class="item-toggle">+</span><a href="#sec-stack-frame-specification-type" title="The Stack Frame Specification Type"><span class="secnum">8</span> The Stack Frame Specification Type</a><ol class="toc"><li><span class="item-toggle-none"></span><a href="#sec-isstackframe" title="IsStackFrame ( frame )"><span class="secnum">8.1</span> IsStackFrame ( <var>frame</var> )</a></li><li><span class="item-toggle-none"></span><a href="#sec-isstackspan" title="IsStackFrameSpan ( span )"><span class="secnum">8.2</span> IsStackFrameSpan ( <var>span</var> )</a></li><li><span class="item-toggle-none"></span><a href="#sec-isstackposition" title="IsStackFramePosition ( position )"><span class="secnum">8.3</span> IsStackFramePosition ( <var>position</var> )</a></li><li><span class="item-toggle-none"></span><a href="#sec-fromstackframe" title="FromStackFrame ( frame )"><span class="secnum">8.4</span> FromStackFrame ( <var>frame</var> )</a></li><li><span class="item-toggle-none"></span><a href="#sec-fromstackframespan" title="FromStackFrameSpan ( span )"><span class="secnum">8.5</span> FromStackFrameSpan ( <var>span</var> )</a></li><li><span class="item-toggle-none"></span><a href="#sec-fromstackframeposition" title="FromStackFramePosition ( position )"><span class="secnum">8.6</span> FromStackFramePosition ( <var>position</var> )</a></li></ol></li><li><span class="item-toggle-none"></span><a href="#sec-grammar-summary" title="Placeholder to ensure correct annex lettering"><span class="secnum">A</span> Placeholder to ensure correct annex lettering</a></li><li><span class="item-toggle">+</span><a href="#sec-additional-built-in-properties" title="Additional Built-in Properties"><span class="secnum">B</span> Additional Built-in Properties</a><ol class="toc"><li><span class="item-toggle">+</span><a href="#sec-additional-properties-of-the-error.prototype-object" title="Additional Properties of the Error.prototype Object"><span class="secnum">B.1</span> Additional Properties of the Error.prototype Object</a><ol class="toc"><li><span class="item-toggle-none"></span><a href="#sec-get-error.prototype-stack" title="get Error.prototype.stack ( )"><span class="secnum">B.1.1</span> get Error.prototype.stack ( )</a></li><li><span class="item-toggle-none"></span><a href="#sec-set-error.prototype-stack" title="set Error.prototype.stack ( value )"><span class="secnum">B.1.2</span> set Error.prototype.stack ( <var>value</var> )</a></li></ol></li></ol></li><li><span class="item-toggle-none"></span><a href="#sec-copyright-and-software-license" title="Copyright &amp; Software License"><span class="secnum">C</span> Copyright &amp; Software License</a></li></ol></div></div><div id="spec-container"><h1 class="version">Stage 1 Draft / October 4, 2023</h1><h1 class="title">Error Stacks</h1>
+    </svg></div><div id="menu-spacer" class="menu-spacer"></div><div id="menu"><div id="menu-search"><input type="text" id="menu-search-box" placeholder="Search..."><div id="menu-search-results" class="inactive"></div></div><div id="menu-pins"><div class="menu-pane-header">Pins<button class="unpin-all">clear</button></div><ul id="menu-pins-list"></ul></div><div class="menu-pane-header">Table of Contents</div><div id="menu-toc"><ol class="toc"><li><span class="item-toggle">+</span><a href="#sec-system" title="System"><span class="secnum">1</span> System</a><ol class="toc"><li><span class="item-toggle-none"></span><a href="#sec-system-get-stack" title="System.getStack ( error )"><span class="secnum">1.1</span> System.getStack ( <var>error</var> )</a></li><li><span class="item-toggle-none"></span><a href="#sec-system-get-stack-string" title="System.getStackString ( error )"><span class="secnum">1.2</span> System.getStackString ( <var>error</var> )</a></li></ol></li><li><span class="item-toggle-none"></span><a href="#sec-getstack" title="GetStack ( error )"><span class="secnum">2</span> GetStack ( <var>error</var> )</a></li><li><span class="item-toggle-none"></span><a href="#sec-getstackstring" title="GetStackString ( error )"><span class="secnum">3</span> GetStackString ( <var>error</var> )</a></li><li><span class="item-toggle-none"></span><a href="#sec-getframestring" title="GetFrameString ( frame )"><span class="secnum">4</span> GetFrameString ( <var>frame</var> )</a></li><li><span class="item-toggle-none"></span><a href="#sec-getstackframespanstring" title="GetStackFrameSpanString ( span )"><span class="secnum">5</span> GetStackFrameSpanString ( <var>span</var> )</a></li><li><span class="item-toggle-none"></span><a href="#sec-getstackframepositionstring" title="GetStackFramePositionString ( position )"><span class="secnum">6</span> GetStackFramePositionString ( <var>position</var> )</a></li><li><span class="item-toggle-none"></span><a href="#sec-getstackframes" title="GetStackFrames ( error )"><span class="secnum">7</span> GetStackFrames ( <var>error</var> )</a></li><li><span class="item-toggle">+</span><a href="#sec-stack-frame-specification-type" title="The Stack Frame Specification Type"><span class="secnum">8</span> The Stack Frame Specification Type</a><ol class="toc"><li><span class="item-toggle-none"></span><a href="#sec-isstackframe" title="IsStackFrame ( frame )"><span class="secnum">8.1</span> IsStackFrame ( <var>frame</var> )</a></li><li><span class="item-toggle-none"></span><a href="#sec-isstackspan" title="IsStackFrameSpan ( span )"><span class="secnum">8.2</span> IsStackFrameSpan ( <var>span</var> )</a></li><li><span class="item-toggle-none"></span><a href="#sec-isstackposition" title="IsStackFramePosition ( position )"><span class="secnum">8.3</span> IsStackFramePosition ( <var>position</var> )</a></li><li><span class="item-toggle-none"></span><a href="#sec-fromstackframe" title="FromStackFrame ( frame )"><span class="secnum">8.4</span> FromStackFrame ( <var>frame</var> )</a></li><li><span class="item-toggle-none"></span><a href="#sec-fromstackframespan" title="FromStackFrameSpan ( span )"><span class="secnum">8.5</span> FromStackFrameSpan ( <var>span</var> )</a></li><li><span class="item-toggle-none"></span><a href="#sec-fromstackframeposition" title="FromStackFramePosition ( position )"><span class="secnum">8.6</span> FromStackFramePosition ( <var>position</var> )</a></li></ol></li><li><span class="item-toggle-none"></span><a href="#sec-grammar-summary" title="Placeholder to ensure correct annex lettering"><span class="secnum">A</span> Placeholder to ensure correct annex lettering</a></li><li><span class="item-toggle">+</span><a href="#sec-additional-built-in-properties" title="Additional Built-in Properties"><span class="secnum">B</span> Additional Built-in Properties</a><ol class="toc"><li><span class="item-toggle">+</span><a href="#sec-additional-properties-of-the-error.prototype-object" title="Additional Properties of the Error.prototype Object"><span class="secnum">B.1</span> Additional Properties of the Error.prototype Object</a><ol class="toc"><li><span class="item-toggle-none"></span><a href="#sec-get-error.prototype-stack" title="get Error.prototype.stack ( )"><span class="secnum">B.1.1</span> get Error.prototype.stack ( )</a></li><li><span class="item-toggle-none"></span><a href="#sec-set-error.prototype-stack" title="set Error.prototype.stack ( value )"><span class="secnum">B.1.2</span> set Error.prototype.stack ( <var>value</var> )</a></li></ol></li></ol></li><li><span class="item-toggle-none"></span><a href="#sec-copyright-and-software-license" title="Copyright &amp; Software License"><span class="secnum">C</span> Copyright &amp; Software License</a></li></ol></div></div><div id="spec-container"><h1 class="version">Stage 1 Draft / February 8, 2024</h1><h1 class="title">Error Stacks</h1>
 
 <emu-clause id="sec-system">
 	<h1><span class="secnum">1</span> System</h1>
@@ -2928,7 +3018,7 @@ li.menu-search-result-term:before {
 <emu-clause id="sec-getstack" aoid="GetStack">
 	<h1><span class="secnum">2</span> GetStack ( <var>error</var> )</h1>
 	<p>When the abstract operation <var>GetStack</var> is called with argument <var>error</var>, the following steps are performed:</p>
-	<emu-alg><ol><li><emu-xref href="#assert"><a href="https://tc39.es/ecma262/#assert">Assert</a></emu-xref>: <var>error</var> has an <var class="field">[[ErrorData]]</var> internal slot.</li><li>Let <var>frames</var> be !&nbsp;<emu-xref aoid="GetStackFrames" id="_ref_2"><a href="#sec-getstackframes">GetStackFrames</a></emu-xref>(<var>error</var>).</li><li>Let <var>string</var> be ?&nbsp;<emu-xref aoid="GetStackString" id="_ref_3"><a href="#sec-getstackstring">GetStackString</a></emu-xref>(<var>error</var>).</li><li>Let <var>obj</var> be <emu-xref aoid="OrdinaryObjectCreate"><a href="https://tc39.es/ecma262/#sec-ordinaryobjectcreate">OrdinaryObjectCreate</a></emu-xref>(%ObjectPrototype%).</li><li>Perform !&nbsp;<emu-xref aoid="CreateDataProperty"><a href="https://tc39.es/ecma262/#sec-createdataproperty">CreateDataProperty</a></emu-xref>(<var>obj</var>, <emu-val>"frames"</emu-val>, <var>frames</var>).</li><li><emu-xref href="#assert"><a href="https://tc39.es/ecma262/#assert">Assert</a></emu-xref>: The above <emu-xref aoid="CreateDataProperty"><a href="https://tc39.es/ecma262/#sec-createdataproperty">CreateDataProperty</a></emu-xref> operation returns <emu-val>true</emu-val>.</li><li>Perform !&nbsp;<emu-xref aoid="CreateDataProperty"><a href="https://tc39.es/ecma262/#sec-createdataproperty">CreateDataProperty</a></emu-xref>(<var>obj</var>, <emu-val>"string"</emu-val>, <var>string</var>).</li><li><emu-xref href="#assert"><a href="https://tc39.es/ecma262/#assert">Assert</a></emu-xref>: The above <emu-xref aoid="CreateDataProperty"><a href="https://tc39.es/ecma262/#sec-createdataproperty">CreateDataProperty</a></emu-xref> operation returns <emu-val>true</emu-val>.</li><li>Let <var>status</var> be !&nbsp;<emu-xref aoid="SetIntegrityLevel"><a href="https://tc39.es/ecma262/#sec-setintegritylevel">SetIntegrityLevel</a></emu-xref>(<var>obj</var>, <emu-val>"frozen"</emu-val>).</li><li><emu-xref href="#assert"><a href="https://tc39.es/ecma262/#assert">Assert</a></emu-xref>: <var>status</var> is <emu-val>true</emu-val>.</li><li>Return <var>obj</var>.</li></ol></emu-alg>
+	<emu-alg><ol><li><emu-xref href="#assert"><a href="https://tc39.es/ecma262/#assert">Assert</a></emu-xref>: <var>error</var> has an <var class="field">[[ErrorData]]</var> internal slot.</li><li>Let <var>frames</var> be !&nbsp;<emu-xref aoid="GetStackFrames" id="_ref_2"><a href="#sec-getstackframes">GetStackFrames</a></emu-xref>(<var>error</var>).</li><li>Let <var>string</var> be ?&nbsp;<emu-xref aoid="GetStackString" id="_ref_3"><a href="#sec-getstackstring">GetStackString</a></emu-xref>(<var>error</var>).</li><li>Let <var>obj</var> be <emu-xref aoid="OrdinaryObjectCreate"><a href="https://tc39.es/ecma262/#sec-ordinaryobjectcreate">OrdinaryObjectCreate</a></emu-xref>(%ObjectPrototype%).</li><li>Perform !&nbsp;<emu-xref aoid="CreateDataProperty"><a href="https://tc39.es/ecma262/#sec-createdataproperty">CreateDataProperty</a></emu-xref>(<var>obj</var>, <emu-val>"frames"</emu-val>, <var>frames</var>).</li><li><emu-xref href="#assert"><a href="https://tc39.es/ecma262/#assert">Assert</a></emu-xref>: The above <emu-xref aoid="CreateDataProperty"><a href="https://tc39.es/ecma262/#sec-createdataproperty">CreateDataProperty</a></emu-xref> operation returns <emu-val>true</emu-val>.</li><li>Perform !&nbsp;<emu-xref aoid="CreateDataProperty"><a href="https://tc39.es/ecma262/#sec-createdataproperty">CreateDataProperty</a></emu-xref>(<var>obj</var>, <emu-val>"string"</emu-val>, <var>string</var>).</li><li><emu-xref href="#assert"><a href="https://tc39.es/ecma262/#assert">Assert</a></emu-xref>: The above <emu-xref aoid="CreateDataProperty"><a href="https://tc39.es/ecma262/#sec-createdataproperty">CreateDataProperty</a></emu-xref> operation returns <emu-val>true</emu-val>.</li><li>Let <var>status</var> be !&nbsp;<emu-xref aoid="SetIntegrityLevel"><a href="https://tc39.es/ecma262/#sec-setintegritylevel">SetIntegrityLevel</a></emu-xref>(<var>obj</var>, <emu-const>frozen</emu-const>).</li><li><emu-xref href="#assert"><a href="https://tc39.es/ecma262/#assert">Assert</a></emu-xref>: <var>status</var> is <emu-val>true</emu-val>.</li><li>Return <var>obj</var>.</li></ol></emu-alg>
 </emu-clause>
 
 <emu-clause id="sec-getstackstring" aoid="GetStackString">
@@ -2958,7 +3048,7 @@ li.menu-search-result-term:before {
 <emu-clause id="sec-getstackframes" aoid="GetStackFrames">
 	<h1><span class="secnum">7</span> GetStackFrames ( <var>error</var> )</h1>
 	<p>When the abstract operation <var>GetStackFrames</var> is called with argument <var>error</var>, the following steps are performed:</p>
-	<emu-alg><ol><li><emu-xref href="#assert"><a href="https://tc39.es/ecma262/#assert">Assert</a></emu-xref>: <var>error</var> has an <var class="field">[[ErrorData]]</var> internal slot.</li><li>Let <var>frames</var> be a new empty <emu-xref href="#sec-list-and-record-specification-type"><a href="https://tc39.es/ecma262/#sec-list-and-record-specification-type">List</a></emu-xref>.</li><li>For each Stack Frame <var>frame</var> in <var>error</var>.<var class="field">[[ErrorData]]</var>, do<ol><li>Append !&nbsp;<emu-xref aoid="FromStackFrame" id="_ref_14"><a href="#sec-fromstackframe">FromStackFrame</a></emu-xref>(<var>frame</var>) to <var>frames</var>.</li></ol></li><li>Let <var>array</var> be <emu-xref aoid="CreateArrayFromList"><a href="https://tc39.es/ecma262/#sec-createarrayfromlist">CreateArrayFromList</a></emu-xref>(<var>frames</var>).</li><li>Let <var>status</var> be !&nbsp;<emu-xref aoid="SetIntegrityLevel"><a href="https://tc39.es/ecma262/#sec-setintegritylevel">SetIntegrityLevel</a></emu-xref>(<var>array</var>, <emu-val>"frozen"</emu-val>).</li><li><emu-xref href="#assert"><a href="https://tc39.es/ecma262/#assert">Assert</a></emu-xref>: <var>status</var> is <emu-val>true</emu-val>.</li><li>Return <var>array</var>.</li></ol></emu-alg>
+	<emu-alg><ol><li><emu-xref href="#assert"><a href="https://tc39.es/ecma262/#assert">Assert</a></emu-xref>: <var>error</var> has an <var class="field">[[ErrorData]]</var> internal slot.</li><li>Let <var>frames</var> be a new empty <emu-xref href="#sec-list-and-record-specification-type"><a href="https://tc39.es/ecma262/#sec-list-and-record-specification-type">List</a></emu-xref>.</li><li>For each Stack Frame <var>frame</var> in <var>error</var>.<var class="field">[[ErrorData]]</var>, do<ol><li>Append !&nbsp;<emu-xref aoid="FromStackFrame" id="_ref_14"><a href="#sec-fromstackframe">FromStackFrame</a></emu-xref>(<var>frame</var>) to <var>frames</var>.</li></ol></li><li>Let <var>array</var> be <emu-xref aoid="CreateArrayFromList"><a href="https://tc39.es/ecma262/#sec-createarrayfromlist">CreateArrayFromList</a></emu-xref>(<var>frames</var>).</li><li>Let <var>status</var> be !&nbsp;<emu-xref aoid="SetIntegrityLevel"><a href="https://tc39.es/ecma262/#sec-setintegritylevel">SetIntegrityLevel</a></emu-xref>(<var>array</var>, <emu-const>frozen</emu-const>).</li><li><emu-xref href="#assert"><a href="https://tc39.es/ecma262/#assert">Assert</a></emu-xref>: <var>status</var> is <emu-val>true</emu-val>.</li><li>Return <var>array</var>.</li></ol></emu-alg>
 </emu-clause>
 
 <emu-clause id="sec-stack-frame-specification-type">
@@ -2985,19 +3075,19 @@ li.menu-search-result-term:before {
 	<emu-clause id="sec-fromstackframe" aoid="FromStackFrame">
 		<h1><span class="secnum">8.4</span> FromStackFrame ( <var>frame</var> )</h1>
 		<p>When the abstract operation FromStackFrame is called with Stack Frame <var>frame</var>, the following steps are taken:</p>
-		<emu-alg><ol><li><emu-xref href="#assert"><a href="https://tc39.es/ecma262/#assert">Assert</a></emu-xref>: !&nbsp;<emu-xref aoid="IsStackFrame" id="_ref_19"><a href="#sec-isstackframe">IsStackFrame</a></emu-xref>(<var>frame</var>) is <emu-val>true</emu-val>.</li><li>Let <var>obj</var> be <emu-xref aoid="OrdinaryObjectCreate"><a href="https://tc39.es/ecma262/#sec-ordinaryobjectcreate">OrdinaryObjectCreate</a></emu-xref>(%ObjectPrototype%).</li><li><emu-xref href="#assert"><a href="https://tc39.es/ecma262/#assert">Assert</a></emu-xref>: <var>obj</var> is an extensible <emu-xref href="#ordinary-object"><a href="https://tc39.es/ecma262/#ordinary-object">ordinary object</a></emu-xref> with no own properties.</li><li>Perform !&nbsp;<emu-xref aoid="CreateDataProperty"><a href="https://tc39.es/ecma262/#sec-createdataproperty">CreateDataProperty</a></emu-xref>(<var>obj</var>, <emu-val>"name"</emu-val>, <var>frame</var>.<var class="field">[[Name]]</var>).</li><li>Let <var>source</var> be <var>frame</var>.<var class="field">[[Source]]</var>.</li><li>If <var>source</var> <emu-xref href="#sec-ecmascript-language-types-string-type"><a href="https://tc39.es/ecma262/#sec-ecmascript-language-types-string-type">is a String</a></emu-xref>, then<ol><li>Perform !&nbsp;<emu-xref aoid="CreateDataProperty"><a href="https://tc39.es/ecma262/#sec-createdataproperty">CreateDataProperty</a></emu-xref>(<var>obj</var>, <emu-val>"source"</emu-val>, <var>source</var>).</li></ol></li><li>Else,<ol><li><emu-xref href="#assert"><a href="https://tc39.es/ecma262/#assert">Assert</a></emu-xref>: !&nbsp;<emu-xref aoid="IsStackFrame" id="_ref_20"><a href="#sec-isstackframe">IsStackFrame</a></emu-xref>(<var>source</var>) is <emu-val>true</emu-val>.</li><li>Perform !&nbsp;<emu-xref aoid="CreateDataProperty"><a href="https://tc39.es/ecma262/#sec-createdataproperty">CreateDataProperty</a></emu-xref>(<var>obj</var>, <emu-val>"source</emu-val>", !&nbsp;<emu-xref aoid="FromStackFrame" id="_ref_21"><a href="#sec-fromstackframe">FromStackFrame</a></emu-xref>(<var>source</var>)).</li></ol></li><li>Perform !&nbsp;<emu-xref aoid="CreateDataProperty"><a href="https://tc39.es/ecma262/#sec-createdataproperty">CreateDataProperty</a></emu-xref>(<var>obj</var>, <emu-val>"span"</emu-val>, !&nbsp;<emu-xref aoid="FromStackFrameSpan" id="_ref_22"><a href="#sec-fromstackframespan">FromStackFrameSpan</a></emu-xref>(<var>frame</var>.<var class="field">[[Span]]</var>)).</li><li><emu-xref href="#assert"><a href="https://tc39.es/ecma262/#assert">Assert</a></emu-xref>: All of the above <emu-xref aoid="CreateDataProperty"><a href="https://tc39.es/ecma262/#sec-createdataproperty">CreateDataProperty</a></emu-xref> operations return <emu-val>true</emu-val>.</li><li>Let <var>status</var> be !&nbsp;<emu-xref aoid="SetIntegrityLevel"><a href="https://tc39.es/ecma262/#sec-setintegritylevel">SetIntegrityLevel</a></emu-xref>(<var>obj</var>, <emu-val>"frozen"</emu-val>).</li><li><emu-xref href="#assert"><a href="https://tc39.es/ecma262/#assert">Assert</a></emu-xref>: <var>status</var> is <emu-val>true</emu-val>.</li><li>Return <var>obj</var>.</li></ol></emu-alg>
+		<emu-alg><ol><li><emu-xref href="#assert"><a href="https://tc39.es/ecma262/#assert">Assert</a></emu-xref>: !&nbsp;<emu-xref aoid="IsStackFrame" id="_ref_19"><a href="#sec-isstackframe">IsStackFrame</a></emu-xref>(<var>frame</var>) is <emu-val>true</emu-val>.</li><li>Let <var>obj</var> be <emu-xref aoid="OrdinaryObjectCreate"><a href="https://tc39.es/ecma262/#sec-ordinaryobjectcreate">OrdinaryObjectCreate</a></emu-xref>(%ObjectPrototype%).</li><li><emu-xref href="#assert"><a href="https://tc39.es/ecma262/#assert">Assert</a></emu-xref>: <var>obj</var> is an extensible <emu-xref href="#ordinary-object"><a href="https://tc39.es/ecma262/#ordinary-object">ordinary object</a></emu-xref> with no own properties.</li><li>Perform !&nbsp;<emu-xref aoid="CreateDataProperty"><a href="https://tc39.es/ecma262/#sec-createdataproperty">CreateDataProperty</a></emu-xref>(<var>obj</var>, <emu-val>"name"</emu-val>, <var>frame</var>.<var class="field">[[Name]]</var>).</li><li>Let <var>source</var> be <var>frame</var>.<var class="field">[[Source]]</var>.</li><li>If <var>source</var> <emu-xref href="#sec-ecmascript-language-types-string-type"><a href="https://tc39.es/ecma262/#sec-ecmascript-language-types-string-type">is a String</a></emu-xref>, then<ol><li>Perform !&nbsp;<emu-xref aoid="CreateDataProperty"><a href="https://tc39.es/ecma262/#sec-createdataproperty">CreateDataProperty</a></emu-xref>(<var>obj</var>, <emu-val>"source"</emu-val>, <var>source</var>).</li></ol></li><li>Else,<ol><li><emu-xref href="#assert"><a href="https://tc39.es/ecma262/#assert">Assert</a></emu-xref>: !&nbsp;<emu-xref aoid="IsStackFrame" id="_ref_20"><a href="#sec-isstackframe">IsStackFrame</a></emu-xref>(<var>source</var>) is <emu-val>true</emu-val>.</li><li>Perform !&nbsp;<emu-xref aoid="CreateDataProperty"><a href="https://tc39.es/ecma262/#sec-createdataproperty">CreateDataProperty</a></emu-xref>(<var>obj</var>, <emu-val>"source</emu-val>", !&nbsp;<emu-xref aoid="FromStackFrame" id="_ref_21"><a href="#sec-fromstackframe">FromStackFrame</a></emu-xref>(<var>source</var>)).</li></ol></li><li>Perform !&nbsp;<emu-xref aoid="CreateDataProperty"><a href="https://tc39.es/ecma262/#sec-createdataproperty">CreateDataProperty</a></emu-xref>(<var>obj</var>, <emu-val>"span"</emu-val>, !&nbsp;<emu-xref aoid="FromStackFrameSpan" id="_ref_22"><a href="#sec-fromstackframespan">FromStackFrameSpan</a></emu-xref>(<var>frame</var>.<var class="field">[[Span]]</var>)).</li><li><emu-xref href="#assert"><a href="https://tc39.es/ecma262/#assert">Assert</a></emu-xref>: All of the above <emu-xref aoid="CreateDataProperty"><a href="https://tc39.es/ecma262/#sec-createdataproperty">CreateDataProperty</a></emu-xref> operations return <emu-val>true</emu-val>.</li><li>Let <var>status</var> be !&nbsp;<emu-xref aoid="SetIntegrityLevel"><a href="https://tc39.es/ecma262/#sec-setintegritylevel">SetIntegrityLevel</a></emu-xref>(<var>obj</var>, <emu-const>frozen</emu-const>).</li><li><emu-xref href="#assert"><a href="https://tc39.es/ecma262/#assert">Assert</a></emu-xref>: <var>status</var> is <emu-val>true</emu-val>.</li><li>Return <var>obj</var>.</li></ol></emu-alg>
 	</emu-clause>
 
 	<emu-clause id="sec-fromstackframespan" aoid="FromStackFrameSpan">
 		<h1><span class="secnum">8.5</span> FromStackFrameSpan ( <var>span</var> )</h1>
 		<p>When the abstract operation FromStackFrameSpan is called with argument <var>span</var>, the following steps are taken:</p>
-		<emu-alg><ol><li><emu-xref href="#assert"><a href="https://tc39.es/ecma262/#assert">Assert</a></emu-xref>: !&nbsp;<emu-xref aoid="IsStackFrameSpan" id="_ref_23"><a href="#sec-isstackspan">IsStackFrameSpan</a></emu-xref>(<var>span</var>) is <emu-val>true</emu-val>.</li><li>Let <var>list</var> be a new empty <emu-xref href="#sec-list-and-record-specification-type"><a href="https://tc39.es/ecma262/#sec-list-and-record-specification-type">List</a></emu-xref>.</li><li>Append !&nbsp;<emu-xref aoid="FromStackFramePosition" id="_ref_24"><a href="#sec-fromstackframeposition">FromStackFramePosition</a></emu-xref>(<var>span</var>.<var class="field">[[StartPosition]]</var>) to <var>list</var>.</li><li>If <var>span</var> has an <var class="field">[[EndPosition]]</var> internal slot, append !&nbsp;<emu-xref aoid="FromStackFramePosition" id="_ref_25"><a href="#sec-fromstackframeposition">FromStackFramePosition</a></emu-xref>(<var>span</var>.<var class="field">[[EndPosition]]</var>) to <var>list</var>.</li><li>Let <var>array</var> be <emu-xref aoid="CreateArrayFromList"><a href="https://tc39.es/ecma262/#sec-createarrayfromlist">CreateArrayFromList</a></emu-xref>(<var>list</var>).</li><li>Let <var>status</var> be !&nbsp;<emu-xref aoid="SetIntegrityLevel"><a href="https://tc39.es/ecma262/#sec-setintegritylevel">SetIntegrityLevel</a></emu-xref>(<var>array</var>, <emu-val>"frozen"</emu-val>).</li><li><emu-xref href="#assert"><a href="https://tc39.es/ecma262/#assert">Assert</a></emu-xref>: <var>status</var> is <emu-val>true</emu-val>.</li><li>Return <var>array</var>.</li></ol></emu-alg>
+		<emu-alg><ol><li><emu-xref href="#assert"><a href="https://tc39.es/ecma262/#assert">Assert</a></emu-xref>: !&nbsp;<emu-xref aoid="IsStackFrameSpan" id="_ref_23"><a href="#sec-isstackspan">IsStackFrameSpan</a></emu-xref>(<var>span</var>) is <emu-val>true</emu-val>.</li><li>Let <var>list</var> be a new empty <emu-xref href="#sec-list-and-record-specification-type"><a href="https://tc39.es/ecma262/#sec-list-and-record-specification-type">List</a></emu-xref>.</li><li>Append !&nbsp;<emu-xref aoid="FromStackFramePosition" id="_ref_24"><a href="#sec-fromstackframeposition">FromStackFramePosition</a></emu-xref>(<var>span</var>.<var class="field">[[StartPosition]]</var>) to <var>list</var>.</li><li>If <var>span</var> has an <var class="field">[[EndPosition]]</var> internal slot, append !&nbsp;<emu-xref aoid="FromStackFramePosition" id="_ref_25"><a href="#sec-fromstackframeposition">FromStackFramePosition</a></emu-xref>(<var>span</var>.<var class="field">[[EndPosition]]</var>) to <var>list</var>.</li><li>Let <var>array</var> be <emu-xref aoid="CreateArrayFromList"><a href="https://tc39.es/ecma262/#sec-createarrayfromlist">CreateArrayFromList</a></emu-xref>(<var>list</var>).</li><li>Let <var>status</var> be !&nbsp;<emu-xref aoid="SetIntegrityLevel"><a href="https://tc39.es/ecma262/#sec-setintegritylevel">SetIntegrityLevel</a></emu-xref>(<var>array</var>, <emu-const>frozen</emu-const>).</li><li><emu-xref href="#assert"><a href="https://tc39.es/ecma262/#assert">Assert</a></emu-xref>: <var>status</var> is <emu-val>true</emu-val>.</li><li>Return <var>array</var>.</li></ol></emu-alg>
 	</emu-clause>
 
 	<emu-clause id="sec-fromstackframeposition" aoid="FromStackFramePosition">
 		<h1><span class="secnum">8.6</span> FromStackFramePosition ( <var>position</var> )</h1>
 		<p>When the abstract operation FromStackFramePosition is called with argument <var>position</var>, the following steps are taken:</p>
-		<emu-alg><ol><li><emu-xref href="#assert"><a href="https://tc39.es/ecma262/#assert">Assert</a></emu-xref>: !&nbsp;<emu-xref aoid="IsStackFramePosition" id="_ref_26"><a href="#sec-isstackposition">IsStackFramePosition</a></emu-xref>(<var>position</var>) is <emu-val>true</emu-val>.</li><li>Let <var>list</var> be a new empty <emu-xref href="#sec-list-and-record-specification-type"><a href="https://tc39.es/ecma262/#sec-list-and-record-specification-type">List</a></emu-xref>.</li><li>Append <var>position</var>.<var class="field">[[Line]]</var> to <var>list</var>.</li><li>If <var>position</var> has a <var class="field">[[Column]]</var> internal slot, append <var>position</var>.<var class="field">[[Column]]</var> to <var>list</var>.</li><li>Let <var>array</var> be <emu-xref aoid="CreateArrayFromList"><a href="https://tc39.es/ecma262/#sec-createarrayfromlist">CreateArrayFromList</a></emu-xref>(<var>list</var>).</li><li>Let <var>status</var> be !&nbsp;<emu-xref aoid="SetIntegrityLevel"><a href="https://tc39.es/ecma262/#sec-setintegritylevel">SetIntegrityLevel</a></emu-xref>(<var>array</var>, <emu-val>"frozen"</emu-val>).</li><li><emu-xref href="#assert"><a href="https://tc39.es/ecma262/#assert">Assert</a></emu-xref>: <var>status</var> is <emu-val>true</emu-val>.</li><li>Return <var>array</var>.</li></ol></emu-alg>
+		<emu-alg><ol><li><emu-xref href="#assert"><a href="https://tc39.es/ecma262/#assert">Assert</a></emu-xref>: !&nbsp;<emu-xref aoid="IsStackFramePosition" id="_ref_26"><a href="#sec-isstackposition">IsStackFramePosition</a></emu-xref>(<var>position</var>) is <emu-val>true</emu-val>.</li><li>Let <var>list</var> be a new empty <emu-xref href="#sec-list-and-record-specification-type"><a href="https://tc39.es/ecma262/#sec-list-and-record-specification-type">List</a></emu-xref>.</li><li>Append <var>position</var>.<var class="field">[[Line]]</var> to <var>list</var>.</li><li>If <var>position</var> has a <var class="field">[[Column]]</var> internal slot, append <var>position</var>.<var class="field">[[Column]]</var> to <var>list</var>.</li><li>Let <var>array</var> be <emu-xref aoid="CreateArrayFromList"><a href="https://tc39.es/ecma262/#sec-createarrayfromlist">CreateArrayFromList</a></emu-xref>(<var>list</var>).</li><li>Let <var>status</var> be !&nbsp;<emu-xref aoid="SetIntegrityLevel"><a href="https://tc39.es/ecma262/#sec-setintegritylevel">SetIntegrityLevel</a></emu-xref>(<var>array</var>, <emu-const>frozen</emu-const>).</li><li><emu-xref href="#assert"><a href="https://tc39.es/ecma262/#assert">Assert</a></emu-xref>: <var>status</var> is <emu-val>true</emu-val>.</li><li>Return <var>array</var>.</li></ol></emu-alg>
 	</emu-clause>
 </emu-clause>
 
@@ -3030,7 +3120,7 @@ li.menu-search-result-term:before {
       <h1><span class="secnum">C</span> Copyright &amp; Software License</h1>
       
       <h2>Copyright Notice</h2>
-      <p>© 2023 Jordan Harband, Mark Miller</p>
+      <p>© 2024 Jordan Harband, Mark Miller</p>
 
       <h2>Software License</h2>
       <p>All Software contained in this document ("Software") is protected by copyright and is being made available under the "BSD License", included below. This Software may be subject to third party rights (rights from parties other than Ecma International), including patent rights, and no licenses under such third party rights are granted under this license even if the third party concerned is a member of Ecma International. SEE THE ECMA CODE OF CONDUCT IN PATENT MATTERS AVAILABLE AT <a href="https://ecma-international.org/memento/codeofconduct.htm">https://ecma-international.org/memento/codeofconduct.htm</a> FOR INFORMATION REGARDING THE LICENSING OF PATENT CLAIMS THAT ARE REQUIRED TO IMPLEMENT ECMA INTERNATIONAL STANDARDS.</p>
