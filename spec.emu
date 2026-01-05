@@ -122,7 +122,7 @@ contributors: Jordan Harband, Mark Miller
 		<h1>IsStackFrame ( _frame_ )</h1>
 		<p>When the abstract operation IsStackFrame is called with Stack Frame _frame_, the following steps are performed:</p>
 		<emu-alg>
-			1. If Type(_frame_) is not Object, return *false*.
+			1. If _frame_ is not an Object, return *false*.
 			1. If _frame_ does not have a [[Name]] internal slot, return *false*.
 			1. If _frame_ does not have a [[Source]] internal slot, return *false*.
 			1. If _frame_ does not have a [[Span]] internal slot, return *false*.
@@ -137,7 +137,7 @@ contributors: Jordan Harband, Mark Miller
 		<h1>IsStackFrameSpan ( _span_ )</h1>
 		<p>When the abstract operation IsStackFrameSpan is called with argument _span_, the following steps are performed:</p>
 		<emu-alg>
-			1. If Type(_span_) is not Object, return *false*.
+			1. If _span_ is not an Object, return *false*.
 			1. If _span_ does not have a [[StartPosition]] internal slot, return *false*.
 			1. If ! IsStackFramePosition(_span_.[[StartPosition]]) is not *true*, return *false*.
 			1. If _span_ has an [[EndPosition]] internal slot, then
@@ -150,7 +150,7 @@ contributors: Jordan Harband, Mark Miller
 		<h1>IsStackFramePosition ( _position_ )</h1>
 		<p>When the abstract operation IsStackFramePosition is called with argument _position_, the following steps are performed:</p>
 		<emu-alg>
-			1. If Type(_position_) is not Object, return *false*.
+			1. If _position_ is not an Object, return *false*.
 			1. If _position_ does not have a [[Line]] internal slot, return *false*.
 			1. If _position_.[[Line]] is not a positive integer &le; 2<sup>53</sup>-1, return *false*.
 			1. If _position_ has a [[Column]] internal slot, then
@@ -227,7 +227,7 @@ contributors: Jordan Harband, Mark Miller
 			<p>*Error.prototype.stack* is an accessor property whose get accessor function performs the following steps:</p>
 			<emu-alg>
 				1. Let _E_ be the *this* value.
-				1. If Type(_E_) is not Object, throw a *TypeError* exception.
+				1. If _E_ is not an Object, throw a *TypeError* exception.
 				1. If _E_ does not have an [[ErrorData]] internal slot, return *undefined*.
 				1. Return ? GetStackString(_error_).
 			</emu-alg>
@@ -239,7 +239,7 @@ contributors: Jordan Harband, Mark Miller
 			<p>Its set accessor function performs the following steps:</p>
 			<emu-alg>
 				1. Let _E_ be the *this* value.
-				1. If Type(_E_) is not Object, throw a *TypeError* exception.
+				1. If _E_ is not an Object, throw a *TypeError* exception.
 				1. Let _numberOfArgs_ be the number of arguments passed to this function call.
 				1. If _numberOfArgs_ is 0, throw a *TypeError* exception.
 				1. Return ? CreateDataPropertyOrThrow(_E_, *"stack"*, _value_).

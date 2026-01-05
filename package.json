@@ -34,7 +34,7 @@
 		"in-publish": "^2.0.1"
 	},
 	"devDependencies": {
-		"@tc39/ecma262-biblio": "^2.1.2682",
-		"ecmarkup": "^18.1.3"
+		"@tc39/ecma262-biblio": "^2.1.2997",
+		"ecmarkup": "^22.0.0"
 	}
 }
